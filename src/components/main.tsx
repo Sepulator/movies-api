@@ -17,6 +17,11 @@ export class Main extends Component<unknown, State> {
     data: { Search: [], totalResults: '0', Response: 'True', Error: '' },
   };
 
+  constructor(props: unknown) {
+    super(props);
+    this.state.query = localStorage.getItem('query') || '';
+  }
+
   onSearch = (value: string) => {
     this.setState({ query: value });
   };
@@ -74,7 +79,7 @@ export class Main extends Component<unknown, State> {
     if (this.state.data.Response === 'False')
       return (
         <main>
-          <Search onSearch={this.onSearch} placeholder="Search..." />
+          <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query }/>
           <hr role="separator" />
           <h2>{this.state.data.Error}</h2>
         </main>
@@ -82,7 +87,7 @@ export class Main extends Component<unknown, State> {
 
     return (
       <main>
-        <Search onSearch={this.onSearch} placeholder="Search..." />
+        <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query } />
         <hr role="separator" />
         <CardList movies={this.state.data.Search} />
       </main>

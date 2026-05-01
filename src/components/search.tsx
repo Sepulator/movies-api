@@ -20,7 +20,7 @@ export class Search extends Component<Props, State> {
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      query: event.target.value,
+      query: event.target.value.trim(),
     });
   };
 
@@ -28,6 +28,7 @@ export class Search extends Component<Props, State> {
     event.preventDefault();
 
     this.props.onSearch(this.state.query);
+    localStorage.setItem('query', this.state.query);
   };
 
   render() {
