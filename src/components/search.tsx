@@ -20,15 +20,15 @@ export class Search extends Component<Props, State> {
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      query: event.target.value.trim(),
+      query: event.target.value,
     });
   };
 
   handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    this.props.onSearch(this.state.query);
-    localStorage.setItem('query', this.state.query);
+    this.props.onSearch(this.state.query.trim());
+    localStorage.setItem('query', this.state.query.trim());
   };
 
   render() {

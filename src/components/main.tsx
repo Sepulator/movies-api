@@ -7,6 +7,7 @@ import { getApiKey } from '@/utils/convert';
 interface State {
   query: string;
   abort: AbortController | null;
+  loading: boolean;
   data: Result;
 }
 
@@ -14,6 +15,7 @@ export class Main extends Component<unknown, State> {
   state: State = {
     query: '',
     abort: null,
+    loading: false,
     data: { Search: [], totalResults: '0', Response: 'True', Error: '' },
   };
 
@@ -29,7 +31,7 @@ export class Main extends Component<unknown, State> {
   fetchMovies = async () => {
     const currentAbortController = new AbortController();
     this.setState({ abort: currentAbortController });
-
+    this.setState({ loading: true });
     try {
       const fetched = await fetch(
         `https://www.omdbapi.com/?s=${this.state.query || 'batman'}&apikey=${getApiKey()}`,
@@ -42,6 +44,7 @@ export class Main extends Component<unknown, State> {
 
       const data = (await fetched.json()) as unknown as Result;
       this.setState({ data });
+      this.setState({ loading: false });
     } catch (err) {
       const error =
         err instanceof Error
@@ -55,6 +58,7 @@ export class Main extends Component<unknown, State> {
           Error: error,
         },
       });
+      this.setState({ loading: false });
     }
   };
 
@@ -76,20 +80,15 @@ export class Main extends Component<unknown, State> {
   }
 
   render() {
-    if (this.state.data.Response === 'False')
-      return (
-        <main>
-          <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query }/>
-          <hr role="separator" />
-          <h2>{this.state.data.Error}</h2>
-        </main>
-      );
-
     return (
       <main>
-        <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query } />
+        <Search
+          onSearch={this.onSearch}
+          placeholder="Search..."
+          initialValue={this.state.query}
+        />
         <hr role="separator" />
-        <CardList movies={this.state.data.Search} />
+        <CardList data={this.state.data} loading={this.state.loading} />
       </main>
     );
   }
