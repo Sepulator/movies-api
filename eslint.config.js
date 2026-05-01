@@ -24,6 +24,10 @@ export default defineConfig([
 
     rules: {
       '@eslint-react/no-missing-key': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^_' },
+      ],
     },
   },
 ]);

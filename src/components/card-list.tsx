@@ -1,14 +1,19 @@
+import type { Movie } from '@/models/interfaces';
 import { Component } from 'react';
 
 interface Props {
-  query: string;
+  movies: Movie[];
 }
 
 export class CardList extends Component<Props, unknown> {
   render() {
     return (
       <section>
-        <h2>{this.props.query}</h2>
+        <ul>
+          {this.props.movies.map((movie) => (
+            <li key={movie.imdbID}>{movie.Title}</li>
+          ))}
+        </ul>
       </section>
     );
   }
