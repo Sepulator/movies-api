@@ -1,5 +1,7 @@
 import type { Movie } from '@/models/interfaces';
 import { Component } from 'react';
+import { Card } from './card';
+import cs from './card-list.module.css';
 
 interface Props {
   movies: Movie[];
@@ -8,10 +10,10 @@ interface Props {
 export class CardList extends Component<Props, unknown> {
   render() {
     return (
-      <section>
-        <ul>
+      <section id="gallery">
+        <ul className={cs.gallery}>
           {this.props.movies.map((movie) => (
-            <li key={movie.imdbID}>{movie.Title}</li>
+            <Card key={movie.imdbID} movie={movie} />
           ))}
         </ul>
       </section>
