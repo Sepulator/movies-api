@@ -30,8 +30,9 @@ export class Main extends Component<unknown, State> {
 
   fetchMovies = async () => {
     const currentAbortController = new AbortController();
-    this.setState({ abort: currentAbortController });
-    this.setState({ loading: true });
+
+    this.setState({ abort: currentAbortController, loading: true });
+
     try {
       const fetched = await fetch(
         `https://www.omdbapi.com/?s=${this.state.query || 'batman'}&apikey=${getApiKey()}`,
@@ -43,8 +44,7 @@ export class Main extends Component<unknown, State> {
       }
 
       const data = (await fetched.json()) as unknown as Result;
-      this.setState({ data });
-      this.setState({ loading: false });
+      this.setState({ data, loading: false });
     } catch (err) {
       const error =
         err instanceof Error
@@ -57,8 +57,8 @@ export class Main extends Component<unknown, State> {
           Response: 'False',
           Error: error,
         },
+        loading: false,
       });
-      this.setState({ loading: false });
     }
   };
 
