@@ -5,12 +5,27 @@
 }
 
 body {
-    padding: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 header {
     padding-top: 1rem;
+    display: flex;
+    direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
+
 footer {
     padding-bottom: 1rem;
+
 }
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;  
+} 
+
+
+

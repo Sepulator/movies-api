@@ -1,4 +1,5 @@
 import { Component, type ChangeEvent, type SubmitEvent } from 'react';
+import cs from './search.module.css';
 
 interface State {
   query: string;
@@ -33,7 +34,7 @@ export class Search extends Component<Props, State> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} role="search">
+      <form onSubmit={this.handleSubmit} role="search" className={cs.form}>
         <input
           type="search"
           name="search"

@@ -35,7 +35,7 @@ export class Main extends Component<unknown, State> {
 
     try {
       const fetched = await fetch(
-        `https://www.omdbapi.com/?s=${this.state.query || 'batman'}&apikey=${getApiKey()}`,
+        `https://www.omdbapi.com/?s=${this.state.query || 'terminator'}&apikey=${getApiKey()}`,
         { signal: currentAbortController.signal },
       );
 

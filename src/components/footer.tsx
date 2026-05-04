@@ -1,25 +1,26 @@
 import { Component } from 'react';
-interface State {
-  isError: boolean;
-}
 
-export class Footer extends Component<unknown, State> {
-  state: State = { isError: false };
+import cs from './footer.module.css'
 
-  handleClick = () => {
-    this.setState({ isError: true });
-  };
+export class Footer extends Component<unknown, unknown> {
 
   render() {
-    if (this.state.isError) {
-      throw new Error('Error boundary tested!');
-    }
-
     return (
       <footer>
-        <button type="button" secondary="true" onClick={this.handleClick}>
-          Error Button
-        </button>
+        <nav className={cs.nav}>
+          <a  className={cs.icon} href="https://github.com/Sepulator" target="_blank" rel="noreferrer">
+            <svg id={cs.github} className="icon" role="presentation" aria-hidden="true">
+              <use href="/icons.svg#github-icon"></use>
+            </svg>
+          </a>
+          <a className={cs.icon} href="https://rs.school/" target="_blank" rel="noreferrer">
+            <svg role="presentation" aria-hidden="true">
+              <use href="/icons.svg#rss-icon"></use>
+            </svg>
+          </a>
+          <span>{new Date().getFullYear() + '©️'}</span>
+        <a href="https://www.omdbapi.com/">OMDb API</a>
+        </nav>
       </footer>
     );
   }

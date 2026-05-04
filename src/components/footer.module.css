@@ -1,0 +1,22 @@
+#github {
+    filter: invert(1) brightness(0.5);
+}
+
+.nav {
+    display: flex;
+    direction: row;
+    justify-content: center;
+    align-items: center;
+
+    gap: 1rem;
+
+    & .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+
+        & svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}

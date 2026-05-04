@@ -5,6 +5,13 @@
     column-gap: 1rem;
 }
 
+.gallery article {
+       
+    & img {
+        transition: transform 0.3s ease-in-out;
+    }
+}
+
 .gallery > li {
     list-style: none;
 }
@@ -12,4 +19,8 @@
 .gallery article:hover {
     cursor: pointer;
     background-color: color-mix(in srgb, var(--muted) 90%, transparent);
+
+    & img {
+        transform: scale(1.1);
+    }
 }
