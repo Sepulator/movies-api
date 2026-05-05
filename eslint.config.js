@@ -3,6 +3,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintReact from '@eslint-react/eslint-plugin';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -12,6 +13,7 @@ export default defineConfig([
       js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
       eslintReact.configs['recommended-typescript'],
+      eslintConfigPrettier,
     ],
     languageOptions: {
       globals: globals.browser,
