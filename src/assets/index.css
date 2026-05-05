@@ -1,0 +1,31 @@
+#root {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+body {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+header {
+    padding-top: 1rem;
+    display: flex;
+    direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    padding-bottom: 1rem;
+
+}
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;  
+} 
+
+
+
