@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Search } from './search';
 import { CardList } from './card-list';
 import type { Result } from '@/models/interfaces';
-import { getApiKey } from '@/utils/convert';
+import { getUrl } from '@/consts';
 
 interface State {
   query: string;
@@ -34,10 +34,7 @@ export class Main extends Component<unknown, State> {
     this.setState({ abort: currentAbortController, loading: true });
 
     try {
-      const fetched = await fetch(
-        `https://www.omdbapi.com/?s=${this.state.query || 'terminator'}&apikey=${getApiKey()}`,
-        { signal: currentAbortController.signal },
-      );
+      const fetched = await fetch(getUrl(this.state.query), { signal: currentAbortController.signal });
 
       if (currentAbortController.signal.aborted) {
         return;
@@ -46,10 +43,7 @@ export class Main extends Component<unknown, State> {
       const data = (await fetched.json()) as unknown as Result;
       this.setState({ data, loading: false });
     } catch (err) {
-      const error =
-        err instanceof Error
-          ? err.message
-          : 'An unexpected non-error exception occurred.';
+      const error = err instanceof Error ? err.message : 'An unexpected non-error exception occurred.';
       this.setState({
         data: {
           Search: [],
@@ -66,10 +60,7 @@ export class Main extends Component<unknown, State> {
     this.fetchMovies().catch(() => {});
   }
 
-  componentDidUpdate(
-    _prevProps: Readonly<unknown>,
-    prevState: Readonly<State>,
-  ) {
+  componentDidUpdate(_prevProps: Readonly<unknown>, prevState: Readonly<State>) {
     if (prevState.query !== this.state.query) {
       this.fetchMovies().catch(() => {});
     }
@@ -82,11 +73,7 @@ export class Main extends Component<unknown, State> {
   render() {
     return (
       <main>
-        <Search
-          onSearch={this.onSearch}
-          placeholder="Search..."
-          initialValue={this.state.query}
-        />
+        <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query} />
         <hr role="separator" />
         <CardList data={this.state.data} loading={this.state.loading} />
       </main>
