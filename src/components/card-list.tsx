@@ -11,13 +11,7 @@ interface Props {
 export class CardList extends Component<Props, unknown> {
   render() {
     if (this.props.loading) {
-      return (
-        <section
-          aria-busy="true"
-          aria-details="spinner"
-          style={{ textAlign: 'center' }}
-        ></section>
-      );
+      return <section role="alert" aria-busy="true" aria-details="spinner" style={{ textAlign: 'center' }}></section>;
     }
 
     if (this.props.data.Response === 'False') {
