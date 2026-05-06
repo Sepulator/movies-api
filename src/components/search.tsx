@@ -34,10 +34,11 @@ export class Search extends Component<Props, State> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} role="search" className={cs.form}>
+      <form onSubmit={this.handleSubmit} className={cs.form}>
         <input
           type="search"
           name="search"
+          aria-label={this.props.placeholder}
           value={this.state.query}
           placeholder={this.props.placeholder || ''}
           onChange={this.handleChange}
