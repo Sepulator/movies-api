@@ -1,4 +1,4 @@
-import { Component, type ChangeEvent, type SubmitEvent } from 'react';
+import { Component, createRef, type ChangeEvent, type SubmitEvent } from 'react';
 import cs from './search.module.css';
 
 interface State {
@@ -12,6 +12,8 @@ interface Props {
 }
 
 export class Search extends Component<Props, State> {
+  ref = createRef<HTMLInputElement>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -32,18 +34,28 @@ export class Search extends Component<Props, State> {
     localStorage.setItem('query', this.state.query.trim());
   };
 
+  componentDidMount() {
+    if (this.ref.current) {
+      this.ref.current.focus();
+    }
+  }
+
   render() {
     return (
       <form onSubmit={this.handleSubmit} className={cs.form}>
         <input
+          ref={this.ref}
           type="search"
           name="search"
           aria-label={this.props.placeholder}
           value={this.state.query}
           placeholder={this.props.placeholder || ''}
+          className={cs.input}
           onChange={this.handleChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={cs.button}>
+          Search
+        </button>
       </form>
     );
   }

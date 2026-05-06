@@ -28,6 +28,12 @@ describe('Search component ', () => {
     expect(screen.getByPlaceholderText(placeholder)).toBeVisible();
   });
 
+  it('should focus input on component mount', () => {
+    render(<Search onSearch={handleSearch} placeholder={placeholder} />);
+
+    expect(screen.getByRole('searchbox', { name: placeholder })).toHaveFocus();
+  });
+
   it('should display previously saved search term on mount', () => {
     render(<Search onSearch={handleSearch} placeholder={placeholder} initialValue={searchTerm} />);
 
