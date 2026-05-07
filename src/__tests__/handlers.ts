@@ -1,9 +1,20 @@
 import { url } from '@/consts';
 import { http, HttpResponse } from 'msw';
-import { mockMovie } from './mocks';
+import { mockNoResult, mockResult } from './mocks';
 
 export const handlers = [
-  http.get(url, () => {
-    return HttpResponse.json(mockMovie);
+  http.get(url, ({ request }) => {
+    const url = new URL(request.url);
+    const query = url.searchParams.get('s');
+
+    if (query === 'not-found') {
+      return HttpResponse.json(mockNoResult);
+    }
+
+    if (query === 'terminator') {
+      return HttpResponse.json(mockResult);
+    }
+
+    return HttpResponse.json(mockResult);
   }),
 ];
