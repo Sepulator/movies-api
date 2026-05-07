@@ -15,6 +15,7 @@ export default defineConfig({
         functions: 50,
         lines: 50,
       },
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
         'src/__tests__/vitest.setup.{js,ts,tsx}',
         'src/__tests__/test-utils.{js,ts,tsx}',
