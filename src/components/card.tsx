@@ -11,11 +11,10 @@ export class Card extends Component<Props, unknown> {
     return (
       <li>
         <article>
-          <img src={Poster} />
+          <img src={Poster} alt={Title} />
           <p>{Title}</p>
           <footer>
             <h3>{Year}</h3>
-            <h3></h3>
           </footer>
         </article>
       </li>
