@@ -9,23 +9,26 @@ export function useMovieSearch(query: string) {
   useEffect(() => {
     let isMounted = true;
 
-    fetchMovies(query)
-      .then((movies) => {
+    async function fetchData() {
+      setLoading(true);
+      try {
+        const data = await fetchMovies(query);
         if (isMounted) {
-          setData(movies);
+          setData(data);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         if (isMounted) {
           const errorMessage = err instanceof Error ? err.message : 'Failed to fetch movies';
           setData({ Error: errorMessage, Search: [], Response: 'False', totalResults: '0' });
         }
-      })
-      .finally(() => {
+      } finally {
         if (isMounted) {
           setLoading(false);
         }
-      });
+      }
+    }
+
+    void fetchData();
 
     return () => {
       isMounted = false;

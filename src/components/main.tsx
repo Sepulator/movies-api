@@ -16,7 +16,7 @@ export function Main() {
     <main>
       <Search onSearch={onSearch} placeholder="Search..." initialValue={query} />
       <hr role="separator" />
-      {data && <CardList data={data} loading={loading} />}
+      <CardList data={data} loading={loading} />
     </main>
   );
 }
