@@ -1,6 +1,6 @@
 import { render, screen } from '@/__tests__/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import App from './app';
+import { App } from './app';
 
 describe('Error boundary component ', () => {
   let consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
