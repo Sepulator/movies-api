@@ -17,9 +17,7 @@ export function Search({ placeholder, initialValue, onSearch }: Props) {
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     onSearch(query.trim());
-    localStorage.setItem('query', query.trim());
   };
 
   if (ref.current) {
