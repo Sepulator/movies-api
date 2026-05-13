@@ -1,25 +1,24 @@
 import type { Result } from '@/models/interfaces';
 import { Card } from './card';
 import cs from './card-list.module.css';
+import { use } from 'react';
 
 interface Props {
-  data: Result | null;
-  loading: boolean;
+  data: Promise<Result>;
+  loading?: boolean;
 }
 
-export function CardList({ data, loading }: Props) {
-  if (loading || !data) {
-    return <section role="alert" aria-busy="true" aria-details="spinner" style={{ textAlign: 'center' }}></section>;
-  }
+export function CardList({ data }: Props) {
+  const { Error, Response, Search } = use(data);
 
-  if (data.Response === 'False') {
-    return <h2 style={{ textAlign: 'center' }}>{data.Error}</h2>;
+  if (Response === 'False') {
+    return <h2 style={{ textAlign: 'center' }}>{Error}</h2>;
   }
 
   return (
     <section id="gallery">
       <ul className={cs.gallery}>
-        {data.Search.map((movie) => (
+        {Search.map((movie) => (
           <Card key={movie.imdbID} movie={movie} />
         ))}
       </ul>
