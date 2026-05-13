@@ -23,9 +23,9 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    linterOptions: {
-      reportUnusedDisableDirectives: 'off',
-    },
+    // linterOptions: {
+    //   reportUnusedDisableDirectives: 'off',
+    // },
     rules: {
       '@eslint-react/no-missing-key': 'warn',
       '@typescript-eslint/no-unused-vars': [

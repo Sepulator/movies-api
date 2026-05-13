@@ -17,12 +17,7 @@ export function Header() {
       <a href="/">
         <h1>Movie API</h1>
       </a>
-      <Link to="/" className="[&.active]:font-bold">
-        Home
-      </Link>{' '}
-      <Link to="/about" className="[&.active]:font-bold">
-        About
-      </Link>
+      <Link to="/">Home</Link> <Link to="/about">About</Link>
       <button type="button" secondary="true" onClick={handleClick}>
         Error Button
       </button>

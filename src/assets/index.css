@@ -22,10 +22,24 @@ footer {
 }
 
 .icon {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 a > h1 {
   margin-bottom: 0;
+}
+
+.active {
+  font-weight: bold;
+}
+
+#github {
+  filter: invert(1) brightness(0.5);
+}
+
+.about {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
 }
