@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 
 export function Header() {
@@ -16,6 +17,12 @@ export function Header() {
       <a href="/">
         <h1>Movie API</h1>
       </a>
+      <Link to="/" className="[&.active]:font-bold">
+        Home
+      </Link>{' '}
+      <Link to="/about" className="[&.active]:font-bold">
+        About
+      </Link>
       <button type="button" secondary="true" onClick={handleClick}>
         Error Button
       </button>
