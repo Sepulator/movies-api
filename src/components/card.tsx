@@ -1,4 +1,5 @@
 import type { Movie } from '@/models/interfaces';
+import { Link } from '@tanstack/react-router';
 
 interface Props {
   movie: Movie;
@@ -8,7 +9,12 @@ export function Card({ movie }: Props) {
   const { Poster, Title, Year } = movie;
 
   return (
-    <li>
+    <Link
+      key={movie.imdbID}
+      to="/details/$movieId"
+      params={{ movieId: movie.imdbID.toString() }}
+      activeProps={{ className: 'active-link' }}
+    >
       <article>
         <img src={Poster} alt={Title} />
         <p>{Title}</p>
@@ -16,6 +22,6 @@ export function Card({ movie }: Props) {
           <h3>{Year}</h3>
         </footer>
       </article>
-    </li>
+    </Link>
   );
 }

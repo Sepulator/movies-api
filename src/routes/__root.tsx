@@ -4,16 +4,20 @@ import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
 
-const RootLayout = () => (
-  <ErrorBoundary Fallback={ErrorInfo}>
-    <Header />
-    <Outlet />
-    <Footer />
-    {/*<TanStackRouterDevtools />*/}
-  </ErrorBoundary>
-);
+export const Route = createRootRoute({ component: RootLayout, notFoundComponent: NotFound });
 
-const NotFound = () => {
+function RootLayout() {
+  return (
+    <ErrorBoundary Fallback={ErrorInfo}>
+      <Header />
+      <Outlet />
+      <Footer />
+      {/*<TanStackRouterDevtools />*/}
+    </ErrorBoundary>
+  );
+}
+
+function NotFound() {
   return (
     <section>
       <article>
@@ -23,6 +27,4 @@ const NotFound = () => {
       </article>
     </section>
   );
-};
-
-export const Route = createRootRoute({ component: RootLayout, notFoundComponent: NotFound });
+}

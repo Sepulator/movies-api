@@ -6,7 +6,6 @@ import { routeTree } from './routeTree.gen';
 import './assets/shadcn-classless.css';
 import './assets/index.css';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
