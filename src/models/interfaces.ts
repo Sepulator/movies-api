@@ -42,7 +42,6 @@ export interface MovieInfo {
 }
 
 export type MovieSearch = {
-  details?: string;
-  page?: string;
-  view?: 'compact' | 'full';
+  search: string;
+  page: number;
 };

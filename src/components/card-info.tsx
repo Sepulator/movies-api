@@ -1,15 +1,11 @@
-import { fetchMovie } from '@/services/api';
-import { useParams } from '@tanstack/react-router';
-import { use } from 'react';
+import type { MovieInfo } from '@/models/interfaces';
 
-export function CardInfo() {
-  const { movieId } = useParams({ from: '/_layout/details/$movieId' });
+interface Props {
+  data: MovieInfo;
+}
 
-  if (!movieId) {
-    return <p>Select movie card from list.</p>;
-  }
-
-  const { Poster, Title, Released, imdbRating, Genre } = use(fetchMovie(movieId));
+export function CardInfo({ data }: Props) {
+  const { Poster, Title, Released, imdbRating, Genre } = data;
 
   return (
     <article className="card-info">

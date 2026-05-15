@@ -24,5 +24,5 @@ export async function fetchData<T>(url: string, empty: T) {
   }
 }
 
-export const fetchMovies = (query: string) => fetchData<Result>(getUrl(query), emptyResult);
+export const fetchMovies = (query: string, page: number) => fetchData<Result>(getUrl(query, page), emptyResult);
 export const fetchMovie = (id: string) => fetchData<MovieInfo>(getMovie(id), emptyMovie);

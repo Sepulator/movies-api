@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import { useMemo, Suspense } from 'react';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 import { Search } from '@/components/search';
@@ -13,13 +13,11 @@ export const Route = createFileRoute('/_layout')({
 });
 
 function SplitViewLayout() {
-  const { query, updateQuery } = useLocalStorage();
-  const [moviesPromise, setMoviesPromise] = useState(() => fetchMovies(query));
+  const { search, page, updateStorage } = useLocalStorage();
+  const moviesPromise = useMemo(() => fetchMovies(search, page), [search, page]);
 
   const onSearch = (value: string) => {
-    updateQuery(value);
-
-    setMoviesPromise(fetchMovies(value));
+    updateStorage(value);
   };
 
   const spinner = (
@@ -28,11 +26,11 @@ function SplitViewLayout() {
 
   return (
     <main>
-      <Search onSearch={onSearch} placeholder="Search..." initialValue={query} />
+      <Search onSearch={onSearch} placeholder="Search..." initialValue={search} />
       <hr role="separator" />
       <section className="split-view">
         <Suspense fallback={spinner}>
-          <CardList data={moviesPromise} />
+          <CardList data={moviesPromise} page={page} />
         </Suspense>
 
         <Suspense fallback={spinner}>

@@ -1,18 +1,16 @@
+import { Suspense, useMemo } from 'react';
+
 import { Search } from './search';
 import { CardList } from './card-list';
-
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { fetchMovies } from '@/services/api';
-import { Suspense, useState } from 'react';
 
 export function Main() {
-  const { query, updateQuery } = useLocalStorage();
-  const [moviesPromise, setMoviesPromise] = useState(() => fetchMovies(query));
+  const { search, page, updateStorage } = useLocalStorage();
+  const moviesPromise = useMemo(() => fetchMovies(search, page), [search, page]);
 
   const onSearch = (value: string) => {
-    updateQuery(value);
-
-    setMoviesPromise(fetchMovies(value));
+    updateStorage(value);
   };
 
   const spinner = (
@@ -21,10 +19,10 @@ export function Main() {
 
   return (
     <main>
-      <Search onSearch={onSearch} placeholder="Search..." initialValue={query} />
+      <Search onSearch={onSearch} placeholder="Search..." initialValue={search} />
       <hr role="separator" />
       <Suspense fallback={spinner}>
-        <CardList data={moviesPromise} />
+        <CardList data={moviesPromise} page={page} />
       </Suspense>
     </main>
   );

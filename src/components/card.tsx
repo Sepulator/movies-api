@@ -1,5 +1,5 @@
+import { Link, useSearch } from '@tanstack/react-router';
 import type { Movie } from '@/models/interfaces';
-import { Link } from '@tanstack/react-router';
 
 interface Props {
   movie: Movie;
@@ -7,10 +7,12 @@ interface Props {
 
 export function Card({ movie }: Props) {
   const { Poster, Title, Year } = movie;
+  const currentSearch = useSearch({ from: '/_layout' });
 
   return (
     <Link
       key={movie.imdbID}
+      search={currentSearch}
       to="/details/$movieId"
       params={{ movieId: movie.imdbID.toString() }}
       activeProps={{ className: 'active-link' }}
