@@ -1,4 +1,4 @@
-import { emptyMovie, emptyResult, getMovie, getUrl } from '@/consts';
+import { emptyMovie, emptyResult, errorMessage, getMovie, getUrl } from '@/consts';
 import type { MovieInfo, Result } from '@/models/interfaces';
 
 export async function fetchData<T>(url: string, empty: T) {
@@ -12,7 +12,7 @@ export async function fetchData<T>(url: string, empty: T) {
     const data = (await response.json()) as unknown as T;
     return data;
   } catch (err: unknown) {
-    const error = err instanceof Error ? err.message : 'An unexpected non-error exception occurred.';
+    const error = err instanceof Error ? err.message : errorMessage;
 
     const data: T = {
       ...empty,

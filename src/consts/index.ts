@@ -1,6 +1,8 @@
 import type { MovieInfo, Result } from '@/models/interfaces';
 import { getApiKey } from '@/utils/convert';
 
+export const errorMessage = 'An unexpected non-error exception occurred.';
+export const storageKey = 'query';
 const defaultTerm = 'terminator';
 const apiKey = getApiKey();
 

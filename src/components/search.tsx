@@ -1,4 +1,4 @@
-import { useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
 import cs from './search.module.css';
 
 interface Props {
@@ -20,9 +20,9 @@ export function Search({ placeholder, initialValue, onSearch }: Props) {
     onSearch(query.trim());
   };
 
-  if (ref.current) {
-    ref.current.focus();
-  }
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className={cs.form}>

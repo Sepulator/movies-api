@@ -1,5 +1,3 @@
-import { Header } from './header';
-
 interface Props {
   err: Error;
   reset: () => void;
@@ -8,8 +6,7 @@ interface Props {
 export function ErrorInfo({ err, reset }: Props) {
   return (
     <>
-      <Header />
-      <main>
+      <main style={{ paddingTop: '4rem' }}>
         <h2>Something went wrong!</h2>
         <article style={{ border: '1px solid red' }}>
           <p style={{ color: 'red' }}>{err.message}</p>

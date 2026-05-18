@@ -1,9 +1,15 @@
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import { render, type RenderOptions } from '@testing-library/react';
 import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/react-router';
 import { routeTree } from '@/routeTree.gen';
+import { ErrorBoundary } from '@/components/error-boundary';
+import { ErrorInfo } from '@/components/error-info';
 
-// Import the generated route tree
+interface RenderWithFileRoutesOptions extends Omit<RenderOptions, 'wrapper'> {
+  initialLocation?: string;
+  routerContext?: object;
+}
 
 // Create test router with generated route tree
 export function createTestRouterFromFiles(initialLocation = '/') {
@@ -21,11 +27,6 @@ export function createTestRouterFromFiles(initialLocation = '/') {
 }
 
 // Custom render function for file-based routes
-interface RenderWithFileRoutesOptions extends Omit<RenderOptions, 'wrapper'> {
-  initialLocation?: string;
-  routerContext?: object;
-}
-
 export function renderWithFileRoutes(
   ui: React.ReactElement,
   { initialLocation = '/', routerContext = {}, ...renderOptions }: RenderWithFileRoutesOptions = {}
@@ -43,10 +44,15 @@ export function renderWithFileRoutes(
   >;
 
   function Wrapper({ children }: { children: React.ReactNode }) {
-    return <RouterProviderWithChildren router={router}>{children}</RouterProviderWithChildren>;
+    return (
+      <ErrorBoundary Fallback={ErrorInfo}>
+        <RouterProviderWithChildren router={router}>{children}</RouterProviderWithChildren>
+      </ErrorBoundary>
+    );
   }
 
   return {
+    user: userEvent.setup(),
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
     router,
   };
