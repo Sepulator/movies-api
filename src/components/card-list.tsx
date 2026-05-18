@@ -1,31 +1,38 @@
-import type { Result } from '@/models/interfaces';
-import { Component } from 'react';
+import { use } from 'react';
+import { useMatch } from '@tanstack/react-router';
+
 import { Card } from './card';
 import cs from './card-list.module.css';
+import type { Result } from '@/models/interfaces';
+import { Pagination } from '@/components/pagination';
 
 interface Props {
-  data: Result;
-  loading: boolean;
+  data: Promise<Result>;
+  page: number;
 }
 
-export class CardList extends Component<Props, unknown> {
-  render() {
-    if (this.props.loading) {
-      return <section role="alert" aria-busy="true" aria-details="spinner" style={{ textAlign: 'center' }}></section>;
-    }
+export function CardList({ data, page }: Props) {
+  const { Error, Response, Search, totalResults } = use(data);
 
-    if (this.props.data.Response === 'False') {
-      return <h2 style={{ textAlign: 'center' }}>{this.props.data.Error}</h2>;
-    }
+  const isDetailsOpen = useMatch({
+    from: '/_layout/details/$movieId',
+    shouldThrow: false,
+  });
 
-    return (
-      <section id="gallery">
-        <ul className={cs.gallery}>
-          {this.props.data.Search.map((movie) => (
+  if (Response === 'False') {
+    return <h2 style={{ textAlign: 'center' }}>{Error}</h2>;
+  }
+
+  return (
+    <>
+      <aside className="card-list">
+        <ul className={`${cs.gallery} ${isDetailsOpen && cs.details}`}>
+          {Search.map((movie) => (
             <Card key={movie.imdbID} movie={movie} />
           ))}
         </ul>
-      </section>
-    );
-  }
+      </aside>
+      <Pagination totalResults={totalResults} page={page} />
+    </>
+  );
 }

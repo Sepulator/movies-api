@@ -1,14 +1,19 @@
-import { render, screen, waitFor } from '@/__tests__/test-utils';
-import { describe, expect, it, vi } from 'vitest';
+import { screen, waitFor } from '@/__tests__/test-utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockResult } from '@/__tests__/mocks';
 import { Main } from './main';
 import { server } from '@/__tests__/vitest.setup';
 import { http, HttpResponse } from 'msw';
-import { url } from '@/consts';
+import { errorMessage, url } from '@/consts';
+import { renderWithFileRoutes } from '@/__tests__/file-route-utils';
 
 describe('Main component ', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it('should display default list of movies', async () => {
-    render(<Main />);
+    renderWithFileRoutes(<Main />);
 
     await waitFor(() => {
       expect(screen.getByText(mockResult.Search[0].Title)).toBeInTheDocument();
@@ -20,7 +25,7 @@ describe('Main component ', () => {
   });
 
   it('should render correct numbers of movies', async () => {
-    render(<Main />);
+    renderWithFileRoutes(<Main />);
 
     await waitFor(() => {
       expect(screen.getAllByRole('article')).toHaveLength(mockResult.Search.length);
@@ -28,10 +33,10 @@ describe('Main component ', () => {
   });
 
   it('should update query and fetch new movies on search', async () => {
-    const { user } = render(<Main />);
+    const { user } = renderWithFileRoutes(<Main />);
 
-    const searchInput = screen.getByRole('searchbox');
-    const searchButton = screen.getByRole('button', { name: /search/i });
+    const searchInput = await screen.findByRole('searchbox');
+    const searchButton = await screen.findByRole('button', { name: /search/i });
 
     await user.clear(searchInput);
     await user.type(searchInput, 'terminator');
@@ -49,7 +54,7 @@ describe('Main component ', () => {
       })
     );
 
-    render(<Main />);
+    renderWithFileRoutes(<Main />);
 
     await waitFor(() => {
       expect(screen.getByText(/Failed to fetch/i)).toBeInTheDocument();
@@ -59,10 +64,10 @@ describe('Main component ', () => {
   it('should handle non-Error exceptions', async () => {
     vi.spyOn(global, 'fetch').mockRejectedValueOnce('Unexpected error');
 
-    render(<Main />);
+    renderWithFileRoutes(<Main />, { initialLocation: '/?search=&page=1' });
 
     await waitFor(() => {
-      expect(screen.getByText(/An unexpected non-error exception occurred/i)).toBeInTheDocument();
+      expect(screen.getByText(errorMessage)).toBeInTheDocument();
     });
 
     vi.restoreAllMocks();
@@ -70,7 +75,7 @@ describe('Main component ', () => {
 
   it('should abort fetch on unmount', async () => {
     const abortSpy = vi.spyOn(AbortController.prototype, 'abort');
-    const { unmount } = render(<Main />);
+    const { unmount } = renderWithFileRoutes(<Main />);
 
     unmount();
 

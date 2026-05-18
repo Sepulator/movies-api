@@ -2,9 +2,10 @@ import { render, screen } from '@/__tests__/test-utils';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { Search } from './search';
+import { storageKey } from '@/consts';
 
 describe('Search component ', () => {
-  const handleSearch = vi.fn();
+  const handleSearch = vi.fn((value: string) => localStorage.setItem(storageKey, value));
   const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
   const placeholder = 'Search...';
   const searchTerm = 'Terminator';
@@ -52,6 +53,7 @@ describe('Search component ', () => {
 
     expect(input).toHaveValue(`  ${searchTerm}  `);
     expect(handleSearch).toHaveBeenCalledWith(searchTerm);
-    expect(setItemSpy).toHaveBeenCalledWith('query', searchTerm);
+    console.log(localStorage.getItem(storageKey));
+    expect(setItemSpy).toHaveBeenCalledWith(storageKey, searchTerm);
   });
 });

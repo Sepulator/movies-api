@@ -1,6 +1,8 @@
-import { render, screen } from '@/__tests__/test-utils';
+import { screen } from '@/__tests__/test-utils';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import App from './app';
+
+import { renderWithFileRoutes } from '@/__tests__/file-route-utils';
+import { Header } from '@/components/header';
 
 describe('Error boundary component ', () => {
   let consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -14,9 +16,9 @@ describe('Error boundary component ', () => {
   });
 
   it('should display error info on button click ', async () => {
-    const { user } = render(<App />);
+    const { user } = renderWithFileRoutes(<Header />);
 
-    const button = screen.getByRole('button', { name: 'Error Button' });
+    const button = await screen.findByRole('button', { name: 'Error Button' });
 
     await user.click(button);
 

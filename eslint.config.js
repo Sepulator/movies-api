@@ -23,7 +23,6 @@ export default defineConfig([
         tsconfigRootDir: import.meta.dirname,
       },
     },
-
     rules: {
       '@eslint-react/no-missing-key': 'warn',
       '@typescript-eslint/no-unused-vars': [
@@ -39,5 +38,6 @@ export default defineConfig([
         },
       ],
     },
+    ignores: ['routeTree.gen.ts'],
   },
 ]);

@@ -1,82 +1,36 @@
-import { Component } from 'react';
+import { Suspense, useMemo } from 'react';
+
 import { Search } from './search';
 import { CardList } from './card-list';
-import type { Result } from '@/models/interfaces';
-import { getUrl } from '@/consts';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { fetchMovies } from '@/services/api';
+import { Outlet } from '@tanstack/react-router';
 
-interface State {
-  query: string;
-  abort: AbortController | null;
-  loading: boolean;
-  data: Result;
-}
+export function Main() {
+  const { search, page, updateStorage } = useLocalStorage();
+  const moviesPromise = useMemo(() => fetchMovies(search, page), [search, page]);
 
-export class Main extends Component<unknown, State> {
-  state: State = {
-    query: '',
-    abort: null,
-    loading: false,
-    data: { Search: [], totalResults: '0', Response: 'True', Error: '' },
+  const onSearch = (value: string) => {
+    updateStorage(value);
   };
 
-  constructor(props: unknown) {
-    super(props);
-    this.state.query = localStorage.getItem('query') || '';
-  }
+  const spinner = (
+    <section role="alert" aria-busy="true" aria-details="spinner" style={{ textAlign: 'center' }}></section>
+  );
 
-  onSearch = (value: string) => {
-    this.setState({ query: value });
-  };
+  return (
+    <main>
+      <Search onSearch={onSearch} placeholder="Search..." initialValue={search} key={search} />
+      <hr role="separator" />
+      <section className="split-view">
+        <Suspense fallback={spinner}>
+          <CardList data={moviesPromise} page={page} />
+        </Suspense>
 
-  fetchMovies = async () => {
-    const currentAbortController = new AbortController();
-
-    this.setState({ abort: currentAbortController, loading: true });
-
-    try {
-      const fetched = await fetch(getUrl(this.state.query), { signal: currentAbortController.signal });
-
-      if (currentAbortController.signal.aborted) {
-        return;
-      }
-
-      const data = (await fetched.json()) as unknown as Result;
-      this.setState({ data, loading: false });
-    } catch (err) {
-      const error = err instanceof Error ? err.message : 'An unexpected non-error exception occurred.';
-      this.setState({
-        data: {
-          Search: [],
-          totalResults: '0',
-          Response: 'False',
-          Error: error,
-        },
-        loading: false,
-      });
-    }
-  };
-
-  componentDidMount() {
-    this.fetchMovies().catch(() => {});
-  }
-
-  componentDidUpdate(_prevProps: Readonly<unknown>, prevState: Readonly<State>) {
-    if (prevState.query !== this.state.query) {
-      this.fetchMovies().catch(() => {});
-    }
-  }
-
-  componentWillUnmount(): void {
-    this.state.abort?.abort();
-  }
-
-  render() {
-    return (
-      <main>
-        <Search onSearch={this.onSearch} placeholder="Search..." initialValue={this.state.query} />
-        <hr role="separator" />
-        <CardList data={this.state.data} loading={this.state.loading} />
-      </main>
-    );
-  }
+        <Suspense fallback={spinner}>
+          <Outlet />
+        </Suspense>
+      </section>
+    </main>
+  );
 }
