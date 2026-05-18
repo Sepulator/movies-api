@@ -21,6 +21,8 @@ export default defineConfig({
         'src/__tests__/test-utils.{js,ts,tsx}',
         'src/__tests__/handlers.{js,ts,tsx}',
         'src/**/*.d.ts',
+        'src/main.tsx',
+        'src/routeTree.gen.ts',
       ],
     },
   },
