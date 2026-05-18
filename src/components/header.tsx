@@ -1,3 +1,4 @@
+import type { MovieSearch } from '@/models/interfaces';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 
@@ -17,10 +18,15 @@ export function Header() {
       <a href="/">
         <h1>Movie API</h1>
       </a>
-      <Link to="/">Home</Link> <Link to="/about">About</Link>
-      <button type="button" secondary="true" onClick={handleClick}>
-        Error Button
-      </button>
+      <nav>
+        <Link to="/" search={(prev) => prev as MovieSearch}>
+          Home
+        </Link>{' '}
+        <Link to="/about">About</Link>
+        <button type="button" secondary="true" onClick={handleClick}>
+          Error Button
+        </button>
+      </nav>
     </header>
   );
 }
