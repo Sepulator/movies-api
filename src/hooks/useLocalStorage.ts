@@ -23,7 +23,7 @@ export function useLocalStorage(storageKey = 'query') {
     localStorage.setItem(storageKey, value);
     void navigate({
       to: '.',
-      search: { search: value, page: search.page ?? 1 },
+      search: { search: value, page: 1 },
       replace: true,
     });
   };

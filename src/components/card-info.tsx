@@ -1,4 +1,5 @@
-import type { MovieInfo } from '@/models/interfaces';
+import type { MovieInfo, MovieSearch } from '@/models/interfaces';
+import { Link } from '@tanstack/react-router';
 
 interface Props {
   data: MovieInfo;
@@ -19,6 +20,10 @@ export function CardInfo({ data }: Props) {
         <span>IMDB rating</span>
         <h3>{imdbRating}</h3>
       </footer>
+
+      <Link to="/" search={(prev) => prev as MovieSearch}>
+        Close
+      </Link>
     </article>
   );
 }
