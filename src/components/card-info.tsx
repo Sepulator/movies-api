@@ -1,4 +1,4 @@
-import type { MovieInfo, MovieSearch } from '@/models/interfaces';
+import type { MovieInfo } from '@/models/interfaces';
 import { Link } from '@tanstack/react-router';
 
 interface Props {
@@ -6,7 +6,11 @@ interface Props {
 }
 
 export function CardInfo({ data }: Props) {
-  const { Poster, Title, Released, imdbRating, Genre } = data;
+  const { Poster, Title, Released, imdbRating, Genre, Response, Error } = data;
+
+  if (Response === 'False') {
+    return <h2 style={{ textAlign: 'center' }}>{Error ?? 'Select movie card from list.'}</h2>;
+  }
 
   return (
     <article className="card-info">
@@ -21,7 +25,13 @@ export function CardInfo({ data }: Props) {
         <h3>{imdbRating}</h3>
       </footer>
 
-      <Link to="/" search={(prev) => prev as MovieSearch}>
+      <Link
+        to="/"
+        search={(prev) => ({
+          search: prev.search ?? '',
+          page: prev.page ?? 1,
+        })}
+      >
         Close
       </Link>
     </article>

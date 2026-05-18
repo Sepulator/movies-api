@@ -4,6 +4,7 @@ import { Search } from './search';
 import { CardList } from './card-list';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { fetchMovies } from '@/services/api';
+import { Outlet } from '@tanstack/react-router';
 
 export function Main() {
   const { search, page, updateStorage } = useLocalStorage();
@@ -19,11 +20,17 @@ export function Main() {
 
   return (
     <main>
-      <Search onSearch={onSearch} placeholder="Search..." initialValue={search} />
+      <Search onSearch={onSearch} placeholder="Search..." initialValue={search} key={search} />
       <hr role="separator" />
-      <Suspense fallback={spinner}>
-        <CardList data={moviesPromise} page={page} />
-      </Suspense>
+      <section className="split-view">
+        <Suspense fallback={spinner}>
+          <CardList data={moviesPromise} page={page} />
+        </Suspense>
+
+        <Suspense fallback={spinner}>
+          <Outlet />
+        </Suspense>
+      </section>
     </main>
   );
 }
