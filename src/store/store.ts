@@ -1,14 +1,14 @@
 import type { Movie } from '@/models/interfaces';
 import { create } from 'zustand';
 
-interface State {
+interface MoviesState {
   movies: Movie[];
   addMovie: (movie: Movie) => void;
   removeMovie: (id: string) => void;
   reset: () => void;
 }
 
-export const useStore = create<State>()((set) => ({
+export const useMoviesStoreBase = create<MoviesState>()((set) => ({
   movies: [],
   addMovie: (newMovie) =>
     set((state) => {
