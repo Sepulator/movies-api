@@ -20,9 +20,10 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(_store: S) =
 
 const useMoviesStore = createSelectors(useMoviesStoreBase);
 
-const useMovies = useMoviesStore.use.movies;
-const useAddMovie = useMoviesStore.use.addMovie;
-const useRemoveMovie = useMoviesStore.use.removeMovie;
-const useResetMovies = useMoviesStore.use.reset;
+export const useMovies = useMoviesStore.use.movies;
+export const useResetMovies = useMoviesStore.use.reset;
+export const useToggleFavorite = useMoviesStore.use.toggleFavorite;
 
-export { useMovies, useAddMovie, useRemoveMovie, useResetMovies };
+export const useIsFavorite = (id: string): boolean => {
+  return useMoviesStore((state) => state.movies.some((movie) => movie.imdbID === id));
+};

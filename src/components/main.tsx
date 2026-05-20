@@ -1,10 +1,11 @@
 import { Suspense, useMemo } from 'react';
+import { Outlet } from '@tanstack/react-router';
 
 import { Search } from './search';
+import { Flyout } from './flyout';
 import { CardList } from './card-list';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { fetchMovies } from '@/services/api';
-import { Outlet } from '@tanstack/react-router';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 export function Main() {
   const { search, page, updateStorage } = useLocalStorage();
@@ -31,6 +32,7 @@ export function Main() {
           <Outlet />
         </Suspense>
       </section>
+      <Flyout />
     </main>
   );
 }
