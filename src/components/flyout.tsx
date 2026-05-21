@@ -16,6 +16,8 @@ export function Flyout() {
     URL.revokeObjectURL(url);
   };
 
+  if (!movies.length) return null;
+
   return (
     <div className="flyout-track">
       <aside role="navigation" id="flyout">
