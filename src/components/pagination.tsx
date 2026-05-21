@@ -13,7 +13,7 @@ export function Pagination({ totalResults, page }: Props) {
   const totalPages = Math.ceil(Number(totalResults) / limit);
 
   return (
-    <nav className="pagination">
+    <div className="pagination">
       <Link from="/" search={(prev: MovieSearch) => ({ ...prev, page: Math.max(1, page - 1) })} disabled={page <= 1}>
         Prev
       </Link>
@@ -23,6 +23,6 @@ export function Pagination({ totalResults, page }: Props) {
       <Link from="/" search={(prev: MovieSearch) => ({ ...prev, page: page + 1 })} disabled={page >= totalPages}>
         Next
       </Link>
-    </nav>
+    </div>
   );
 }
