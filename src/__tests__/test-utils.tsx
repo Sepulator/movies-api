@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import React, { type ReactElement } from 'react';
 import { render, type RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import { ErrorBoundary } from '@/components/error-boundary';
 import { ErrorInfo } from '@/components/error-info';
 

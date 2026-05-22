@@ -1,7 +1,8 @@
-import { useTheme } from '@/hooks/useTheme';
-import type { MovieSearch } from '@/models/interfaces';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
+
+import { useTheme } from '@/hooks/useTheme';
+import type { MovieSearch } from '@/models/interfaces';
 
 export function Header() {
   const [isError, setIsError] = useState(false);
