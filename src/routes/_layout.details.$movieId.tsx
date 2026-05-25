@@ -1,6 +1,7 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router';
-import { CardInfo } from '@/components/card-info';
+
 import { fetchMovie } from '@/services/api';
+import { CardInfo } from '@/components/card-info';
 
 export const Route = createFileRoute('/_layout/details/$movieId')({
   loader: async ({ params }) => fetchMovie(params.movieId),

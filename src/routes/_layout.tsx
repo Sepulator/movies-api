@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { validateSearch } from '@/services/validate-search';
-
 import { Main } from '@/components/main';
+import { validateSearch } from '@/services/validate-search';
 
 export const Route = createFileRoute('/_layout')({
   validateSearch,

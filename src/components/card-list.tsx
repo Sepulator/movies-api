@@ -25,13 +25,13 @@ export function CardList({ data, page }: Props) {
 
   return (
     <>
-      <aside className="card-list">
+      <div className="card-list">
         <ul className={`${cs.gallery} ${isDetailsOpen && cs.details}`}>
           {Search.map((movie) => (
             <Card key={movie.imdbID} movie={movie} />
           ))}
         </ul>
-      </aside>
+      </div>
       <Pagination totalResults={totalResults} page={page} />
     </>
   );

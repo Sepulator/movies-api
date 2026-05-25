@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { ErrorInfo } from '@/components/error-info';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -13,9 +14,11 @@ export const Route = createRootRoute({
 function RootLayout() {
   return (
     <ErrorBoundary Fallback={ErrorInfo}>
-      <Header />
-      <Outlet />
-      <Footer />
+      <ThemeProvider>
+        <Header />
+        <Outlet />
+        <Footer />
+      </ThemeProvider>
       {/*<TanStackRouterDevtools />*/}
     </ErrorBoundary>
   );
