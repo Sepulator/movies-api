@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from 'react';
+import { Suspense } from 'react';
 import { Outlet } from '@tanstack/react-router';
 
 import { Search } from './search';
@@ -9,15 +9,12 @@ import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 export function Main() {
   const { search, page, updateStorage } = useLocalStorage();
-  const moviesPromise = useMemo(() => fetchMovies(search, page), [search, page]);
 
   const onSearch = (value: string) => {
     updateStorage(value);
   };
 
-  const spinner = (
-    <section role="alert" aria-busy="true" aria-details="spinner" style={{ textAlign: 'center' }}></section>
-  );
+  const spinner = <section role="alert" aria-busy="spinner" aria-details="spinner" style={{ textAlign: 'center' }} />;
 
   return (
     <main>
@@ -25,7 +22,13 @@ export function Main() {
       <hr role="separator" />
       <section className="split-view">
         <Suspense fallback={spinner}>
-          <CardList data={moviesPromise} page={page} />
+          <CardList
+            queryOptions={{
+              queryKey: ['movies', search, page],
+              queryFn: () => fetchMovies(search, page),
+            }}
+            page={page}
+          />
         </Suspense>
 
         <Suspense fallback={spinner}>
