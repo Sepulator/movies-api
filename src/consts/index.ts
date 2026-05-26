@@ -1,7 +1,7 @@
 import type { MovieInfo, Result } from '@/models/interfaces';
 import { getApiKey } from '@/utils/convert';
 
-export const errorMessage = 'An unexpected non-error exception occurred.';
+export const STALE_TIME = 15 * 60 * 1000;
 export const storageKey = 'query';
 const defaultTerm = 'terminator';
 const apiKey = getApiKey();

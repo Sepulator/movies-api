@@ -1,15 +1,12 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { routeTree } from './routeTree.gen';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import './assets/shadcn-classless.css';
 import './assets/index.css';
-
-export const queryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: import.meta.env.VITE_STALE_TIME } },
-});
+import { queryClient } from './services/query-client';
 
 const router = createRouter({ routeTree });
 

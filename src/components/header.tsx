@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 
 import { useTheme } from '@/hooks/useTheme';
 import type { MovieSearch } from '@/models/interfaces';
-import { queryClient } from '@/main';
+import { queryClient } from '@/services/query-client';
 
 export function Header() {
   const [isError, setIsError] = useState(false);

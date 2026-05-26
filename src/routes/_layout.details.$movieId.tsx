@@ -17,8 +17,8 @@ export function DetailsView() {
   const { movieId } = Route.useParams();
   const { data, error } = useSuspenseQuery(getMovieDetailsQueryOptions(movieId));
 
-  if (error || !data || data.Response === 'False') {
-    return <h2 style={{ textAlign: 'center' }}>{error?.message || data?.Error || 'Failed to fetch'}</h2>;
+  if (error || !data) {
+    return <h2 style={{ textAlign: 'center' }}>{error?.message || 'Failed to fetch'}</h2>;
   }
 
   return <CardInfo data={data} />;

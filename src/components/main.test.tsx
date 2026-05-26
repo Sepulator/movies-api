@@ -4,7 +4,7 @@ import { mockResult } from '@/__tests__/mocks';
 import { Main } from './main';
 import { server } from '@/__tests__/vitest.setup';
 import { http, HttpResponse } from 'msw';
-import { errorMessage, url } from '@/consts';
+import { url } from '@/consts';
 import { renderWithFileRoutes } from '@/__tests__/file-route-utils';
 
 describe('Main component ', () => {
@@ -67,7 +67,7 @@ describe('Main component ', () => {
     renderWithFileRoutes(<Main />, { initialLocation: '/?search=&page=1' });
 
     await waitFor(() => {
-      expect(screen.getByText(errorMessage)).toBeInTheDocument();
+      expect(screen.getByText('Failed to fetch')).toBeInTheDocument();
     });
 
     vi.restoreAllMocks();
