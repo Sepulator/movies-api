@@ -7,7 +7,10 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './assets/shadcn-classless.css';
 import './assets/index.css';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: import.meta.env.VITE_STALE_TIME } },
+});
+
 const router = createRouter({ routeTree });
 
 declare module '@tanstack/react-router' {
