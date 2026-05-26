@@ -8,7 +8,7 @@ import { Pagination } from '@/components/pagination';
 
 interface Props {
   queryOptions: {
-    queryKey: [string, string, number];
+    queryKey: readonly ['movies', string, number];
     queryFn: () => Promise<Result>;
   };
   page: number;

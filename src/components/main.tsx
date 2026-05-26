@@ -7,6 +7,11 @@ import { CardList } from './card-list';
 import { fetchMovies } from '@/services/api';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
+const getCardListQueryOptions = (search: string, page: number) => ({
+  queryKey: ['movies', search, page] as const,
+  queryFn: () => fetchMovies(search, page),
+});
+
 export function Main() {
   const { search, page, updateStorage } = useLocalStorage();
 
@@ -22,13 +27,7 @@ export function Main() {
       <hr role="separator" />
       <section className="split-view">
         <Suspense fallback={spinner}>
-          <CardList
-            queryOptions={{
-              queryKey: ['movies', search, page],
-              queryFn: () => fetchMovies(search, page),
-            }}
-            page={page}
-          />
+          <CardList queryOptions={getCardListQueryOptions(search, page)} page={page} />
         </Suspense>
 
         <Suspense fallback={spinner}>
