@@ -11,6 +11,14 @@ interface Props {
 export function Modal({ children, title, showModal, callback }: Props) {
   const ref = useRef<HTMLDialogElement | null>(null);
 
+  function closeOnBackDropClick({ currentTarget, target }: React.MouseEvent<HTMLDialogElement>) {
+    const dialog = currentTarget;
+    const isClickedOnBackDrop = target === dialog;
+    if (isClickedOnBackDrop) {
+      dialog.close();
+    }
+  }
+
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -31,14 +39,16 @@ export function Modal({ children, title, showModal, callback }: Props) {
     <>
       {showModal &&
         createPortal(
-          <dialog ref={ref} id="forms-modal" aria-label="Forms modal window">
-            <header>
-              <h3>{title}</h3>
-            </header>
-            {children}
-            <form method="dialog">
-              <button type="submit">Close</button>
-            </form>
+          <dialog ref={ref} className="dialog" aria-label="Forms modal window" onClick={closeOnBackDropClick}>
+            <div className="dialog-wrapper">
+              <header>
+                <h3>{title}</h3>
+              </header>
+              {children}
+              <form method="dialog">
+                <button type="submit">Close</button>
+              </form>
+            </div>
           </dialog>,
           document.body
         )}

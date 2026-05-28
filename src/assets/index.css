@@ -38,53 +38,12 @@ a > h1 {
   margin-bottom: 0;
 }
 
-.active {
-  font-weight: bold;
-}
-
 #github {
   filter: invert(1) brightness(0.5);
 }
 
-.about {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-}
-
-.table {
-  display: grid;
-  grid-template-rows: 1fr;
-}
-
-.split-view {
-  display: grid;
-  grid-template-columns: 3fr auto;
-  align-items: start;
-
-  grid-template-areas:
-    'card-list card-info'
-    'pagination pagination';
-}
-
-.split-view:has(.card-info) {
-  column-gap: 2rem;
-}
-
 .card-list {
   grid-area: card-list;
-}
-
-.card-info {
-  max-width: 300px;
-  grid-area: card-info;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  grid-area: pagination;
 }
 
 #article {
@@ -107,34 +66,17 @@ a > h1 {
   border-width: 1px;
 }
 
-.flyout-track {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 100%;
-  width: 0;
-  pointer-events: none;
-}
-
-#flyout {
-  pointer-events: auto;
-
-  opacity: 0.8;
-  z-index: 2;
-
-  position: sticky;
-  top: calc(100vh - 140px);
-  width: fit-content;
-  transform: translateX(-100%);
-
-  & div {
-    display: flex;
-    gap: 1rem;
-  }
-}
-
 .theme-icon {
   width: 1rem;
   height: 1rem;
   vertical-align: middle;
+}
+
+.dialog {
+  border: none;
+  padding: 0;
+}
+
+.dialog-wrapper {
+  padding: 1em;
 }
