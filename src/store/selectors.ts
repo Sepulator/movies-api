@@ -1,5 +1,5 @@
 import type { StoreApi, UseBoundStore } from 'zustand';
-import { useMoviesStoreBase } from './store';
+import { useFormsStoreBase } from './store';
 
 type WithSelectors<S> = S extends { getState: () => infer T } ? S & { use: { [K in keyof T]: () => T[K] } } : never;
 
@@ -18,6 +18,9 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(_store: S) =
   return store;
 };
 
-const useMoviesStore = createSelectors(useMoviesStoreBase);
+const useFormsStore = createSelectors(useFormsStoreBase);
 
-export const useResetMovies = useMoviesStore.use.reset;
+export const useResetMovies = useFormsStore.use.reset;
+export const useShowModal = useFormsStore.use.showModal;
+export const useItems = useFormsStore.use.items;
+export const useToggleModal = useFormsStore.use.toggleModal;
