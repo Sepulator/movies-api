@@ -5,11 +5,20 @@ import { createRouter, RouterProvider, createMemoryHistory } from '@tanstack/rea
 import { routeTree } from '@/routeTree.gen';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { ErrorInfo } from '@/components/error-info';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface RenderWithFileRoutesOptions extends Omit<RenderOptions, 'wrapper'> {
   initialLocation?: string;
   routerContext?: object;
 }
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 // Create test router with generated route tree
 export function createTestRouterFromFiles(initialLocation = '/') {
@@ -45,9 +54,11 @@ export function renderWithFileRoutes(
 
   function Wrapper({ children }: { children: React.ReactNode }) {
     return (
-      <ErrorBoundary Fallback={ErrorInfo}>
-        <RouterProviderWithChildren router={router}>{children}</RouterProviderWithChildren>
-      </ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ErrorBoundary Fallback={ErrorInfo}>
+          <RouterProviderWithChildren router={router}>{children}</RouterProviderWithChildren>
+        </ErrorBoundary>
+      </QueryClientProvider>
     );
   }
 

@@ -21,10 +21,10 @@
   git clone https://github.com/Sepulator/movies-api.git
 ```
 
-#### 2. Switch to `class-components` branch
+#### 2. Switch to `api-queries` branch
 
 ```bash copy
-  git switch class-components
+  git switch api-queries
 ```
 
 #### 3. Open project directory and install dependencies

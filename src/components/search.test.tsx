@@ -53,7 +53,7 @@ describe('Search component ', () => {
 
     expect(input).toHaveValue(`  ${searchTerm}  `);
     expect(handleSearch).toHaveBeenCalledWith(searchTerm);
-    console.log(localStorage.getItem(storageKey));
+
     expect(setItemSpy).toHaveBeenCalledWith(storageKey, searchTerm);
   });
 });

@@ -23,7 +23,7 @@ describe('Header Component', () => {
       </ThemeProvider>
     );
 
-    const themeBtn = await screen.findByRole('button', { name: /Toggle theme/i });
+    const themeBtn = await screen.findByRole('button', { name: /Theme/i });
 
     expect(themeBtn.querySelector('use')?.getAttribute('href')).toBe('/icons.svg#sun');
 
@@ -40,8 +40,7 @@ describe('Header Component', () => {
       </ThemeProvider>
     );
 
-    const errorBtn = await screen.findByRole('button', { name: /Error Button/i });
-    await screen.findByRole('button', { name: /Error Button/i });
+    const errorBtn = await screen.findByRole('button', { name: /Error/i });
     await user.click(errorBtn);
 
     expect(screen.getByText(/Error boundary tested!/i)).toBeInTheDocument();

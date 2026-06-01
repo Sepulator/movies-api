@@ -1,16 +1,19 @@
-import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
 
 import { useTheme } from '@/hooks/useTheme';
 import type { MovieSearch } from '@/models/interfaces';
+import { queryClient } from '@/services/query-client';
 
 export function Header() {
   const [isError, setIsError] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
-  const handleClick = () => {
+  const handleError = () => {
     setIsError(true);
   };
+
+  const handleInvalidate = async () => await queryClient.invalidateQueries();
 
   if (isError) {
     throw new Error('Error boundary tested!');
@@ -26,15 +29,19 @@ export function Header() {
         Home
       </Link>
       <Link to="/about">About</Link>
-      <button type="button" secondary="true" onClick={handleClick}>
-        Error Button
-      </button>
-      <button type="button" onClick={toggleTheme}>
-        <svg role="presentation" aria-hidden="true" className="theme-icon">
-          {theme === 'dark' ? <use href="/icons.svg#sun"></use> : <use href="/icons.svg#moon"></use>}
-        </svg>
-        {' Toggle theme '}
-      </button>
+      <div>
+        <input type="reset" value="Invalidate" onClick={() => void handleInvalidate()} />
+        <button type="button" secondary="true" onClick={handleError}>
+          Error
+        </button>
+
+        <button type="button" onClick={toggleTheme}>
+          <svg role="presentation" aria-hidden="true" className="theme-icon">
+            {theme === 'dark' ? <use href="/icons.svg#sun"></use> : <use href="/icons.svg#moon"></use>}
+          </svg>
+          {' Theme '}
+        </button>
+      </div>
     </header>
   );
 }
