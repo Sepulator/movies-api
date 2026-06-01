@@ -40,7 +40,7 @@ export function Modal({ children, title, showModal, callback }: Props) {
       {showModal &&
         createPortal(
           <dialog ref={ref} className="dialog" aria-label="Forms modal window" onClick={closeOnBackDropClick}>
-            <div className="dialog-wrapper">
+            <article className="dialog-wrapper">
               <header>
                 <h3>{title}</h3>
               </header>
@@ -48,7 +48,7 @@ export function Modal({ children, title, showModal, callback }: Props) {
               <form method="dialog">
                 <button type="submit">Close</button>
               </form>
-            </div>
+            </article>
           </dialog>,
           document.body
         )}

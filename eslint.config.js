@@ -24,6 +24,12 @@ export default defineConfig([
       },
     },
     rules: {
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        {
+          checksVoidReturn: false,
+        },
+      ],
       '@eslint-react/no-missing-key': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'error',

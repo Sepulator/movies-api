@@ -11,22 +11,18 @@ body {
 }
 
 header {
-  padding-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  & div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
 }
 
 footer {
   padding-bottom: 1rem;
+}
+
+small {
+  position: absolute;
 }
 
 .icon {
@@ -79,4 +75,13 @@ a > h1 {
 
 .dialog-wrapper {
   padding: 1em;
+}
+
+.pt {
+  padding-top: 1.2rem;
+}
+
+.error {
+  margin-top: 5px;
+  color: var(--pico-del-color);
 }
