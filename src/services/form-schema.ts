@@ -1,5 +1,6 @@
-import { countries } from '@/consts';
 import { z } from 'zod';
+
+import { countriesList } from '@/consts';
 import { checkPasswordNumber, checkPasswordUpper, checkPasswordLower, checkPasswordSpecial } from './check-password';
 
 const isValidEmail = (email: string) => {
@@ -41,7 +42,7 @@ export const formSchema = z
       .refine(checkPasswordLower, 'Password must contain at least 1 lowercase')
       .refine(checkPasswordSpecial, 'Password must contain at least 1 special character'),
     confirmPassword: z.string().min(1, 'Confirm Password is required'),
-    country: z.enum(countries, { message: 'Select country from list' }),
+    country: z.enum(countriesList, { message: 'Select country from list' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',

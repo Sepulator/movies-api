@@ -20,7 +20,9 @@ const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(_store: S) =
 
 const useFormsStore = createSelectors(useFormsStoreBase);
 
-export const useResetMovies = useFormsStore.use.reset;
+export const useResetItems = useFormsStore.use.reset;
 export const useShowModal = useFormsStore.use.showModal;
 export const useItems = useFormsStore.use.items;
 export const useToggleModal = useFormsStore.use.toggleModal;
+export const useCountries = useFormsStore.use.countries;
+export const useAddItem = useFormsStore.use.addItem;
