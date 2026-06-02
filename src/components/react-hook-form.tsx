@@ -1,23 +1,29 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type FormSchema } from '@/services/form-schema';
+import { countries } from '@/consts';
+import { checkPasswordStrength } from '@/services/check-password';
 
 export function ReactHookForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    mode: 'onTouched',
+    mode: 'all',
   });
+
+  const password = watch('password', '');
+  const passwordStrength = checkPasswordStrength(password);
 
   const onSubmit: SubmitHandler<FormSchema> = (data) => {
     console.log('Form data submitted:', data);
   };
 
   return (
-    <form onSubmit={void handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="name">
         Name:
         <input id="name" type="text" {...register('name')} aria-invalid={!!errors.name} />
@@ -36,7 +42,7 @@ export function ReactHookForm() {
         {errors.email && <small>{errors.email.message}</small>}
       </label>
 
-      <fieldset>
+      <fieldset style={{ marginBottom: '0' }}>
         <legend>Gender</legend>
         <input type="radio" id="male" value="male" {...register('gender')} aria-invalid={!!errors.gender} />
         <label htmlFor="male">Male</label>
@@ -44,10 +50,10 @@ export function ReactHookForm() {
         <label htmlFor="female">Female</label>
         <input type="radio" id="other" value="other" {...register('gender')} aria-invalid={!!errors.gender} />
         <label htmlFor="other">Other</label>
-        {errors.gender && <small className="error">{errors.gender.message}</small>}
       </fieldset>
+      {errors.gender && <small className="error">{errors.gender.message}</small>}
 
-      <label htmlFor="termsAndConditions">
+      <label htmlFor="termsAndConditions" className="pt">
         <input id="termsAndConditions" type="checkbox" {...register('termsAndConditions')} />I accept the Terms and
         Conditions
       </label>
@@ -61,11 +67,24 @@ export function ReactHookForm() {
 
       <label htmlFor="password" className="pt">
         Password:
-        <input id="password" type="password" {...register('password')} aria-invalid={!!errors.password} />
-        {errors.password && <small>{errors.password.message}</small>}
+        <input
+          style={{ marginBottom: '1rem' }}
+          id="password"
+          type="password"
+          {...register('password')}
+          aria-invalid={!!errors.password}
+        />
+        <div>
+          {errors.password && (
+            <small className="error" style={{ paddingTop: '0.5em' }}>
+              {errors.password.message}
+            </small>
+          )}
+          {password && <meter max={4} value={passwordStrength}></meter>}
+        </div>
       </label>
 
-      <label htmlFor="confirmPassword">
+      <label htmlFor="confirmPassword" className="pt">
         Confirm Password:
         <input
           id="confirmPassword"
@@ -77,9 +96,21 @@ export function ReactHookForm() {
       </label>
 
       <label htmlFor="country" style={{ paddingBottom: '1rem' }}>
-        Country:
-        <input id="country" type="text" {...register('country')} aria-invalid={!!errors.country} />
+        Country
+        <input
+          id="country"
+          list="countries"
+          placeholder="Select or type country"
+          autoComplete="off"
+          {...register('country')}
+          aria-invalid={!!errors.country}
+        />
         {errors.country && <small>{errors.country.message}</small>}
+        <datalist id="countries">
+          {countries.map((country) => (
+            <option key={country} value={country} />
+          ))}
+        </datalist>
       </label>
 
       <button type="submit" disabled={!isValid}>

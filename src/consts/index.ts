@@ -13,3 +13,26 @@ export const modalFormComponents = {
   uncontolled: ReactHookForm,
   contolled: null,
 } satisfies Record<ModalForm, null | (() => JSX.Element)>;
+
+export const countries = [
+  'Chad',
+  'Benin',
+  'Togo',
+  'Ghana',
+  'Gabon',
+  'Guyana',
+  'Suriname',
+  'Panama',
+  'Belize',
+  'Jamaica',
+  'Cuba',
+  'Haiti',
+  'Laos',
+  'Brunei',
+  'Palau',
+  'Nauru',
+  'Samoa',
+  'Tuvalu',
+  'Vanuatu',
+  'Fiji',
+];

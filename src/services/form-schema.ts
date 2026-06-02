@@ -1,4 +1,6 @@
+import { countries } from '@/consts';
 import { z } from 'zod';
+import { checkPasswordNumber, checkPasswordUpper, checkPasswordLower, checkPasswordSpecial } from './check-password';
 
 const isValidEmail = (email: string) => {
   const parts = email.split('@');
@@ -32,9 +34,14 @@ export const formSchema = z
         (files) => ['image/jpeg', 'image/png'].includes(files[0]?.type),
         'Only .jpg, .jpeg, .png formats are supported.'
       ),
-    password: z.string().min(8, 'Password must be at least 8 characters long'),
+    password: z
+      .string()
+      .refine(checkPasswordNumber, 'Password must contain at least 1 number')
+      .refine(checkPasswordUpper, 'Password must contain at least 1 uppercase')
+      .refine(checkPasswordLower, 'Password must contain at least 1 lowercase')
+      .refine(checkPasswordSpecial, 'Password must contain at least 1 special character'),
     confirmPassword: z.string().min(1, 'Confirm Password is required'),
-    country: z.string().min(1, 'Country is required'),
+    country: z.enum(countries, { message: 'Select country from list' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',

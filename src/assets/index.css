@@ -1,3 +1,5 @@
+@import './meter.css';
+
 #root {
   min-height: 100vh;
   display: grid;
@@ -12,7 +14,7 @@ body {
 
 header {
   display: flex;
-  flex-direction: row;
+  flex-direction: rowa;
   justify-content: space-between;
   align-items: center;
 }
@@ -78,7 +80,7 @@ a > h1 {
 }
 
 .pt {
-  padding-top: 1.2rem;
+  padding-top: 1.6rem;
 }
 
 .error {
