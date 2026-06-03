@@ -31,14 +31,14 @@ const formSchemaBase = z
       .refine(isValidEmail, 'At least one dot and upper domain name'),
     gender: z.enum(['male', 'female', 'other'], { message: 'Gender is required' }),
     termsAndConditions: z.boolean().refine((val) => val === true, 'You must accept the Terms and Conditions'),
+    country: z.enum(countriesList, { message: 'Select country from list' }),
     password: z
       .string()
-      .min(1, 'Email is required')
+      .min(1, 'Password is required')
       .refine(checkPasswordNumber, 'Password must contain at least 1 number')
       .refine(checkPasswordUpper, 'Password must contain at least 1 uppercase')
       .refine(checkPasswordLower, 'Password must contain at least 1 lowercase')
       .refine(checkPasswordSpecial, 'Password must contain at least 1 special character'),
-    country: z.enum(countriesList, { message: 'Select country from list' }),
     confirmPassword: z.string().min(1, 'Confirm Password is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {

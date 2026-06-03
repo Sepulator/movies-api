@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddItem, useCountries, useToggleModal } from '@/store/selectors';
 import { checkPasswordStrength } from '@/services/check-password';
 import { formSchema, type FormSchema } from '@/services/form-schema';
-import { convertImageToBase64 } from '@/services/convert-iamge';
+import { convertImageToBase64 } from '@/services/convert-image';
 import type { FormItem } from '@/models/interfaces';
 
 export function ReactHookForm() {
@@ -63,7 +63,7 @@ export function ReactHookForm() {
       </fieldset>
       <small className="error">{errors.gender?.message}</small>
 
-      <label htmlFor="termsAndConditions" style={{ marginBottom: '1.2rem' }}>
+      <label htmlFor="termsAndConditions" style={{ marginBottom: '0.6rem' }}>
         <input id="termsAndConditions" type="checkbox" {...register('termsAndConditions')} />I accept the Terms and
         Conditions
         <small style={{ marginTop: '0.5rem' }} className="error">
@@ -75,7 +75,7 @@ export function ReactHookForm() {
       <input id="image" type="file" accept=".jpg,.jpeg,.png" {...register('image')} aria-invalid={!!errors.image} />
       <small>{errors.image?.message}</small>
 
-      <label htmlFor="country">
+      <label htmlFor="country" style={{ marginTop: '0.6rem' }}>
         Country
         <input
           id="country"
@@ -95,16 +95,8 @@ export function ReactHookForm() {
 
       <label htmlFor="password">
         Password:
-        <input
-          style={{ marginBottom: '1rem' }}
-          id="password"
-          type="password"
-          {...register('password')}
-          aria-invalid={!!errors.password}
-        />
-        <small className="error" style={{ paddingTop: '0.5em' }}>
-          {errors.password?.message}
-        </small>
+        <input id="password" type="password" {...register('password')} aria-invalid={!!errors.password} />
+        <small className="error">{errors.password?.message}</small>
         <meter max={4} value={passwordStrength}></meter>
       </label>
 

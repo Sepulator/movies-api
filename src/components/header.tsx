@@ -10,7 +10,9 @@ export function Header() {
       <nav>
         <ul>
           <li>
-            <h1>Forms</h1>
+            <a href="/">
+              <h1>Forms</h1>
+            </a>
           </li>
         </ul>
       </nav>

@@ -3,7 +3,7 @@ import { useRef, useState, type SyntheticEvent } from 'react';
 import { useAddItem, useCountries, useToggleModal } from '@/store/selectors';
 import { checkPasswordStrength } from '@/services/check-password';
 import { formSchemaUncontrolled } from '@/services/form-schema';
-import { convertImageToBase64 } from '@/services/convert-iamge';
+import { convertImageToBase64 } from '@/services/convert-image';
 import type { FormItem } from '@/models/interfaces';
 
 export function UncontrolledForm() {
@@ -88,7 +88,7 @@ export function UncontrolledForm() {
       </fieldset>
       <small className="error">{errors.gender}</small>
 
-      <label htmlFor="termsAndConditions" style={{ marginBottom: '1.2rem' }}>
+      <label htmlFor="termsAndConditions" style={{ marginTop: '0.6rem' }}>
         <input id="termsAndConditions" name="termsAndConditions" type="checkbox" />I accept the Terms and Conditions
         <small style={{ marginTop: '0.5rem' }} className="error">
           {errors.termsAndConditions}
@@ -99,7 +99,7 @@ export function UncontrolledForm() {
       <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png" aria-invalid={!!errors.image} />
       <small>{errors.image}</small>
 
-      <label htmlFor="country">
+      <label htmlFor="country" style={{ marginTop: '0.6rem' }}>
         Country
         <input
           id="country"
@@ -119,17 +119,8 @@ export function UncontrolledForm() {
 
       <label htmlFor="password">
         Password:
-        <input
-          style={{ marginBottom: '1rem' }}
-          id="password"
-          name="password"
-          ref={passwordRef}
-          type="password"
-          aria-invalid={!!errors.password}
-        />
-        <small className="error" style={{ paddingTop: '0.5em' }}>
-          {errors.password}
-        </small>
+        <input id="password" name="password" ref={passwordRef} type="password" aria-invalid={!!errors.password} />
+        <small className="error">{errors.password}</small>
         <meter max={4} value={passwordStrength}></meter>
       </label>
 
