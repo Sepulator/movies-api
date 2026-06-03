@@ -75,6 +75,24 @@ export function ReactHookForm() {
       <input id="image" type="file" accept=".jpg,.jpeg,.png" {...register('image')} aria-invalid={!!errors.image} />
       <small>{errors.image?.message}</small>
 
+      <label htmlFor="country">
+        Country
+        <input
+          id="country"
+          list="countries"
+          placeholder="Select or type country"
+          autoComplete="off"
+          {...register('country')}
+          aria-invalid={!!errors.country}
+        />
+        <small>{errors.country?.message}</small>
+        <datalist id="countries">
+          {countries.map((country) => (
+            <option key={country} value={country} />
+          ))}
+        </datalist>
+      </label>
+
       <label htmlFor="password">
         Password:
         <input
@@ -99,24 +117,6 @@ export function ReactHookForm() {
           aria-invalid={!!errors.confirmPassword}
         />
         <small>{errors.confirmPassword?.message}</small>
-      </label>
-
-      <label htmlFor="country">
-        Country
-        <input
-          id="country"
-          list="countries"
-          placeholder="Select or type country"
-          autoComplete="off"
-          {...register('country')}
-          aria-invalid={!!errors.country}
-        />
-        <small>{errors.country?.message}</small>
-        <datalist id="countries">
-          {countries.map((country) => (
-            <option key={country} value={country} />
-          ))}
-        </datalist>
       </label>
 
       <button type="submit" disabled={!isValid}>
