@@ -46,7 +46,9 @@ export function Modal({ children, title, showModal, callback }: Props) {
               </header>
               {children}
               <form method="dialog">
-                <button type="submit">Close</button>
+                <button type="submit" className="secondary">
+                  Close
+                </button>
               </form>
             </article>
           </dialog>,
