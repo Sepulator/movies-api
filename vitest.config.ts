@@ -1,16 +1,7 @@
 import { defineConfig } from 'vitest/config';
-import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },
-  plugins: [
-    tanstackRouter({
-      // Configure for test environment
-      routesDirectory: './src/routes',
-      generatedRouteTree: './src/routeTree.gen.ts',
-      disableLogging: true,
-    }),
-  ],
   test: {
     globals: true,
     environment: 'jsdom',
