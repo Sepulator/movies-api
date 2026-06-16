@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+'use client';
 
+import { useState } from 'react';
+import Link from 'next/link';
 import { useTheme } from '@/hooks/useTheme';
-import type { MovieSearch } from '@/models/interfaces';
-import { queryClient } from '@/services/query-client';
+import { useQueryClient } from '@tanstack/react-query';
 
 export function Header() {
   const [isError, setIsError] = useState(false);
@@ -13,7 +13,7 @@ export function Header() {
     setIsError(true);
   };
 
-  const handleInvalidate = async () => await queryClient.invalidateQueries();
+  const handleInvalidate = void useQueryClient().invalidateQueries();
 
   if (isError) {
     throw new Error('Error boundary tested!');
@@ -21,16 +21,14 @@ export function Header() {
 
   return (
     <header>
-      <a href="/">
+      <Link href="/">
         <h1>Movie API</h1>
-      </a>
-
-      <Link to="/" search={(prev) => prev as MovieSearch}>
-        Home
       </Link>
-      <Link to="/about">About</Link>
+
+      <Link href="/">Home</Link>
+      <Link href="/about">About</Link>
       <div>
-        <input type="reset" value="Invalidate" onClick={() => void handleInvalidate()} />
+        <input type="reset" value="Invalidate" onClick={handleInvalidate} />
         <button type="button" secondary="true" onClick={handleError}>
           Error
         </button>

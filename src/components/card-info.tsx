@@ -1,5 +1,7 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
 import type { MovieInfo } from '@/models/interfaces';
-import { Link } from '@tanstack/react-router';
 
 interface Props {
   data: MovieInfo;
@@ -14,7 +16,7 @@ export function CardInfo({ data }: Props) {
 
   return (
     <article className="card-info">
-      <img src={Poster} alt={Title} />
+      <Image src={Poster} alt={Title} width={266} height={393} />
       <p>{Title}</p>
       <footer className="table">
         <span>Release date</span>
@@ -25,15 +27,7 @@ export function CardInfo({ data }: Props) {
         <h3>{imdbRating}</h3>
       </footer>
 
-      <Link
-        to="/"
-        search={(prev) => ({
-          search: prev.search ?? '',
-          page: prev.page ?? 1,
-        })}
-      >
-        Close
-      </Link>
+      <Link href="/">Close</Link>
     </article>
   );
 }

@@ -1,6 +1,7 @@
-import { Link } from '@tanstack/react-router';
+'use client';
 
-import type { MovieSearch } from '@/models/interfaces';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   totalResults: string;
@@ -10,19 +11,22 @@ interface Props {
 const limit = 10;
 
 export function Pagination({ totalResults, page }: Props) {
+  const searchParams = useSearchParams();
   const totalPages = Math.ceil(Number(totalResults) / limit);
+
+  const getPageLink = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', newPage.toString());
+    return `/?${params.toString()}`;
+  };
 
   return (
     <div className="pagination">
-      <Link from="/" search={(prev: MovieSearch) => ({ ...prev, page: Math.max(1, page - 1) })} disabled={page <= 1}>
-        Prev
-      </Link>
+      {page > 1 ? <Link href={getPageLink(page - 1)}>Prev</Link> : <span>Prev</span>}
       <span>
         <strong>{page}</strong>
       </span>
-      <Link from="/" search={(prev: MovieSearch) => ({ ...prev, page: page + 1 })} disabled={page >= totalPages}>
-        Next
-      </Link>
+      {page < totalPages ? <Link href={getPageLink(page + 1)}>Next</Link> : <span>Next</span>}
     </div>
   );
 }

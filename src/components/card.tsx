@@ -1,4 +1,8 @@
-import { Link } from '@tanstack/react-router';
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
+
 import type { Movie } from '@/models/interfaces';
 import { useIsFavorite, useToggleFavorite } from '@/store/selectors';
 
@@ -13,29 +17,16 @@ export function Card({ movie }: Props) {
 
   return (
     <article id="article">
-      <Link
-        key={movie.imdbID}
-        search={(prev) => ({
-          search: prev.search ?? '',
-          page: prev.page ?? 1,
-        })}
-        to="/details/$movieId"
-        params={{ movieId: movie.imdbID.toString() }}
-        activeProps={{ className: 'active-link' }}
-      >
-        <div>
-          <img src={Poster} alt={Title} />
+      <Link href={`/details/${imdbID}`}>
+        <div className="card-link">
+          <Image src={Poster} alt={Title} width={203} height={300} loading="eager" />
           <footer>
             <p>{Title}</p>
             <h3>{Year}</h3>
           </footer>
         </div>
       </Link>
-      <button
-        type="button"
-        {...(isFavorite ? { secondary: 'true' } : { outline: 'true' })}
-        onClick={() => toggleFavorite(movie)}
-      >
+      <button type="button" onClick={() => toggleFavorite(movie)}>
         {isFavorite ? 'Remove movie' : 'Add movie'}
       </button>
     </article>

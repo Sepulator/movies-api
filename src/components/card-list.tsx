@@ -1,4 +1,6 @@
-import { useMatch } from '@tanstack/react-router';
+'use client';
+
+import { usePathname } from 'next/navigation';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { Card } from './card';
@@ -17,10 +19,8 @@ interface Props {
 export function CardList({ queryOptions, page }: Props) {
   const { data, error } = useSuspenseQuery(queryOptions);
 
-  const isDetailsOpen = useMatch({
-    from: '/_layout/details/$movieId',
-    shouldThrow: false,
-  });
+  const pathname = usePathname();
+  const isDetailsOpen = pathname.includes('/details/');
 
   if (error || !data || data.Response === 'False') {
     return <h2 style={{ textAlign: 'center' }}>{error?.message || data?.Error || 'Failed to fetch'}</h2>;

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+
 import '../assets/index.css';
+import '../assets/shadcn-classless.css';
 import Providers from './providers';
 
 export const metadata: Metadata = {
@@ -7,11 +9,14 @@ export const metadata: Metadata = {
   description: 'Movies API Application',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, details }: { children: React.ReactNode; details: React.ReactNode }) {
   return (
     <html lang="en">
       <body id="root">
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          {details}
+        </Providers>
       </body>
     </html>
   );
