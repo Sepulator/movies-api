@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import '../assets/index.css';
 import '../assets/shadcn-classless.css';
 import Providers from './providers';
+import { MainLayout } from './main-layout';
 
 export const metadata: Metadata = {
   title: 'Movies API',
@@ -14,8 +15,12 @@ export default function RootLayout({ children, details }: { children: React.Reac
     <html lang="en">
       <body id="root">
         <Providers>
-          {children}
-          {details}
+          <MainLayout>
+            <section className="split-view">
+              {children}
+              {details}
+            </section>
+          </MainLayout>
         </Providers>
       </body>
     </html>

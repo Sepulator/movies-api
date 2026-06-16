@@ -1,13 +1,17 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
 import type { MovieInfo } from '@/models/interfaces';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   data: MovieInfo;
 }
 
 export function CardInfo({ data }: Props) {
+  const searchParams = useSearchParams();
   const { Poster, Title, Released, imdbRating, Genre, Response, Error } = data;
 
   if (Response === 'False') {
@@ -27,7 +31,7 @@ export function CardInfo({ data }: Props) {
         <h3>{imdbRating}</h3>
       </footer>
 
-      <Link href="/">Close</Link>
+      <Link href={`/?${searchParams.toString()}`}>Close</Link>
     </article>
   );
 }
