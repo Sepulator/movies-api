@@ -1,7 +1,5 @@
+import { Main } from './main';
+
 export default function Home() {
-  return (
-    <main>
-      <h1>Movies API</h1>
-    </main>
-  );
+  return <Main />;
 }

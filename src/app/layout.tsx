@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../assets/index.css';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Movies API',
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body id="root">{children}</body>
+      <body id="root">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

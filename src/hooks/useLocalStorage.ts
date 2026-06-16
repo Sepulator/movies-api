@@ -1,35 +1,37 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { storageKey } from '@/consts';
 
 export function useLocalStorage(key = storageKey) {
-  const navigate = useNavigate();
-  const search = useSearch({ strict: false });
-  const searchTerm = search.search;
-  const page = search.page;
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const isFirstRenderRef = useRef(true);
+
+  const search = searchParams.get('search') ?? '';
+  const page = Number(searchParams.get('page') ?? 1);
 
   useEffect(() => {
     if (!isFirstRenderRef.current) return;
-    const value = searchTerm || localStorage.getItem(key);
-
-    void navigate({
-      to: '.',
-      search: { search: value || '', page: page || 1 },
-      replace: true,
-    });
-
     isFirstRenderRef.current = false;
-  }, [navigate, key, searchTerm, page]);
+
+    const savedSearch = localStorage.getItem(key);
+    if (savedSearch && !searchParams.has('search')) {
+      const params = new URLSearchParams(searchParams);
+      params.set('search', savedSearch);
+      params.set('page', '1');
+      router.replace(`/?${params.toString()}`);
+    }
+  }, [router, searchParams, key]);
 
   const updateStorage = (value: string) => {
     localStorage.setItem(key, value);
-    void navigate({
-      to: '.',
-      search: { search: value, page: 1 },
-      replace: true,
-    });
+    const params = new URLSearchParams(searchParams);
+    params.set('search', value);
+    params.set('page', '1');
+    router.push(`/?${params.toString()}`);
   };
 
-  return { search: search.search ?? '', page: search.page ?? 1, updateStorage };
+  return { search, page, updateStorage };
 }
