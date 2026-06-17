@@ -20,7 +20,7 @@ export function CardInfo({ data }: Props) {
 
   return (
     <article className="card-info">
-      <Image src={Poster} alt={Title} width={266} height={393} />
+      <Image src={Poster} alt={Title} width={266} height={393} style={{ width: '266px', height: '393px' }} />
       <p>{Title}</p>
       <footer className="table">
         <span>Release date</span>
