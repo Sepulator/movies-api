@@ -22,7 +22,6 @@ export default async function LocaleLayout({ children, params, details }: Props)
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
   setRequestLocale(locale);
 
   return (

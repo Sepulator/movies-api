@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { useRouter, usePathname } from '@/i18n/navigation';
 import { storageKey } from '@/consts';
 
 export function useLocalStorage(key = storageKey) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const isFirstRenderRef = useRef(true);
 
@@ -21,16 +23,17 @@ export function useLocalStorage(key = storageKey) {
       const params = new URLSearchParams(searchParams);
       params.set('search', savedSearch);
       params.set('page', '1');
-      router.replace(`/?${params.toString()}`);
+
+      router.replace(`${pathname}?${params.toString()}`);
     }
-  }, [router, searchParams, key]);
+  }, [router, pathname, searchParams, key]);
 
   const updateStorage = (value: string) => {
     localStorage.setItem(key, value);
     const params = new URLSearchParams(searchParams);
     params.set('search', value);
     params.set('page', '1');
-    router.push(`/?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return { search, page, updateStorage };
