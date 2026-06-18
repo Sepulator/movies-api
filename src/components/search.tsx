@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
 import cs from './search.module.css';
+import { useTranslations } from 'next-intl';
 
 interface Props {
-  placeholder?: string;
   initialValue?: string;
   onSearch: (value: string) => void;
 }
 
-export function Search({ placeholder, initialValue, onSearch }: Props) {
+export function Search({ initialValue, onSearch }: Props) {
   const [query, setQuery] = useState(initialValue || '');
   const ref = useRef<HTMLInputElement>(null);
+  const t = useTranslations('Search');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
@@ -30,14 +31,13 @@ export function Search({ placeholder, initialValue, onSearch }: Props) {
         ref={ref}
         type="search"
         name="search"
-        aria-label={placeholder}
         value={query}
-        placeholder={placeholder || ''}
+        placeholder={t('placeholder') || ''}
         className={cs.input}
         onChange={handleChange}
       />
       <button type="submit" className={cs.button}>
-        Search
+        {t('search')}
       </button>
     </form>
   );

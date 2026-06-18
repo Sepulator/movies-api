@@ -1,0 +1,38 @@
+{
+  "Card": {
+    "add": "Add movie",
+    "remove": "Remove movie"
+  },
+  "Buttons": {
+    "close": "Close"
+  },
+  "Flyout": {
+    "download": "Download",
+    "unselect": "Unselect",
+    "selected": "Selected movies: {count}"
+  },
+  "Header": {
+    "about": "About",
+    "api": "Movie API",
+    "home": "Home",
+    "invalidate": "Invalidate",
+    "error": "Error",
+    "theme": "Theme"
+  },
+  "Search": {
+    "placeholder": "Search movie",
+    "search": "Search"
+  },
+  "About": {
+    "title": "About",
+    "info": "The Movies API is a RESTful web service to obtain movie information",
+    "course": "RS School React course",
+    "author": "Author Yuri S.",
+    "api": "API used - "
+  },
+  "NotFound": {
+    "404": "404 - Page Not Found",
+    "page": "The page you are looking for does not exist.",
+    "go": "Go to Home"
+  }
+}

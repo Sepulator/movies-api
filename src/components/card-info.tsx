@@ -1,10 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 
 import type { MovieInfo } from '@/models/interfaces';
-import { useSearchParams } from 'next/navigation';
 
 interface Props {
   data: MovieInfo;
@@ -12,6 +13,7 @@ interface Props {
 
 export function CardInfo({ data }: Props) {
   const searchParams = useSearchParams();
+  const t = useTranslations('Buttons');
   const { Poster, Title, Released, imdbRating, Genre, Response, Error } = data;
 
   if (Response === 'False') {
@@ -31,7 +33,7 @@ export function CardInfo({ data }: Props) {
         <h3>{imdbRating}</h3>
       </footer>
 
-      <Link href={`/?${searchParams.toString()}`}>Close</Link>
+      <Link href={`/?${searchParams.toString()}`}>{t('close')}</Link>
     </article>
   );
 }

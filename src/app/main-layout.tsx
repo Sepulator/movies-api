@@ -12,7 +12,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <main>
       <Header />
-      <Search onSearch={updateStorage} placeholder="Search..." initialValue={search} key={search} />
+      <Search onSearch={updateStorage} initialValue={search} key={search} />
       <hr role="separator" />
       {children}
       <Flyout />

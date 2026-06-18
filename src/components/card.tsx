@@ -1,11 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import type { Movie } from '@/models/interfaces';
 import { useIsFavorite, useToggleFavorite } from '@/store/selectors';
-import { useSearchParams } from 'next/navigation';
 
 interface Props {
   movie: Movie;
@@ -16,6 +17,7 @@ export function Card({ movie }: Props) {
   const { Poster, Title, Year, imdbID } = movie;
   const isFavorite = useIsFavorite(imdbID);
   const toggleFavorite = useToggleFavorite();
+  const t = useTranslations('Card');
 
   const image =
     Poster === 'N/A' ? (
@@ -45,7 +47,7 @@ export function Card({ movie }: Props) {
         </div>
       </Link>
       <button type="button" onClick={() => toggleFavorite(movie)}>
-        {isFavorite ? 'Remove movie' : 'Add movie'}
+        {isFavorite ? t('remove') : t('add')}
       </button>
     </article>
   );
