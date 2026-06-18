@@ -29,11 +29,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body id="root">
         <NextIntlClientProvider>
           <Providers>
-            <main>
-              <Header />
-              {children}
-              <Footer />
-            </main>
+            <Header />
+            <main>{children}</main>
+            <Footer />
           </Providers>
         </NextIntlClientProvider>
       </body>

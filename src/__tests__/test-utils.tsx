@@ -4,9 +4,6 @@ import { render, type RenderOptions } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { ErrorBoundary } from '@/components/error-boundary';
-import { ErrorInfo } from '@/components/error-info';
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -16,11 +13,7 @@ const queryClient = new QueryClient({
 });
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ErrorBoundary Fallback={ErrorInfo}>{children}</ErrorBoundary>
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) => {

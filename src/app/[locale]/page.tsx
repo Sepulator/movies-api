@@ -29,11 +29,7 @@ export default async function Page({ searchParams }: Props) {
         <Suspense fallback={spinner}>
           <CardList dataPromise={dataPromise} page={page} />
         </Suspense>
-        {movie && (
-          <div className="movie-details">
-            <CardInfo data={movie} />
-          </div>
-        )}
+        {movie && <CardInfo data={movie} />}
       </section>
       <Flyout />
     </>
