@@ -1,7 +1,7 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { use } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { Card } from './card';
 import cs from './card-list.module.css';
@@ -9,21 +9,18 @@ import type { Result } from '@/models/interfaces';
 import { Pagination } from '@/components/pagination';
 
 interface Props {
-  queryOptions: {
-    queryKey: readonly ['movies', string, number];
-    queryFn: () => Promise<Result>;
-  };
+  dataPromise: Promise<Result>;
   page: number;
 }
 
-export function CardList({ queryOptions, page }: Props) {
-  const { data, error } = useSuspenseQuery(queryOptions);
+export function CardList({ dataPromise, page }: Props) {
+  const data = use(dataPromise);
 
-  const pathname = usePathname();
-  const isDetailsOpen = pathname.includes('/details/');
+  const searchParams = useSearchParams();
+  const isDetailsOpen = searchParams.has('detailsId');
 
-  if (error || !data || data.Response === 'False') {
-    return <h2 style={{ textAlign: 'center' }}>{error?.message || data?.Error || 'Failed to fetch'}</h2>;
+  if (!data || data.Response === 'False') {
+    return <h2 style={{ textAlign: 'center' }}>{data?.Error || 'Failed to fetch'}</h2>;
   }
 
   return (

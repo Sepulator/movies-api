@@ -1,3 +1,4 @@
 *.min.css
 *classless.css
 routeTree.gen.ts
+next-env.d.ts

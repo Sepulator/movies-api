@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 
@@ -13,12 +13,16 @@ interface Props {
 
 export function CardInfo({ data }: Props) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const t = useTranslations('Buttons');
   const { Poster, Title, Released, imdbRating, Genre, Response, Error } = data;
 
   if (Response === 'False') {
     return <h2 style={{ textAlign: 'center' }}>{Error || 'Select movie card from list.'}</h2>;
   }
+
+  const closeParams = new URLSearchParams(searchParams);
+  closeParams.delete('detailsId');
 
   return (
     <article className="card-info">
@@ -33,7 +37,7 @@ export function CardInfo({ data }: Props) {
         <h3>{imdbRating}</h3>
       </footer>
 
-      <Link href={`/?${searchParams.toString()}`}>{t('close')}</Link>
+      <Link href={{ pathname, query: closeParams.toString() }}>{t('close')}</Link>
     </article>
   );
 }

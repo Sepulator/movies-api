@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 
 import type { Movie } from '@/models/interfaces';
@@ -14,6 +14,7 @@ interface Props {
 
 export function Card({ movie }: Props) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const { Poster, Title, Year, imdbID } = movie;
   const isFavorite = useIsFavorite(imdbID);
   const toggleFavorite = useToggleFavorite();
@@ -37,7 +38,7 @@ export function Card({ movie }: Props) {
 
   return (
     <article id="article">
-      <Link href={`/details/${imdbID}?${searchParams.toString()}`}>
+      <Link href={{ pathname, query: { ...Object.fromEntries(searchParams.entries()), detailsId: imdbID } }}>
         <div className="card-link">
           {image}
           <footer>

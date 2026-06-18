@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
-import cs from './search.module.css';
+'use client';
+
 import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
 
-interface Props {
-  initialValue?: string;
-  onSearch: (value: string) => void;
-}
+import cs from './search.module.css';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-export function Search({ initialValue, onSearch }: Props) {
-  const [query, setQuery] = useState(initialValue || '');
+export function Search() {
+  const { search, updateStorage } = useLocalStorage();
+  const [query, setQuery] = useState(search || '');
   const ref = useRef<HTMLInputElement>(null);
   const t = useTranslations('Search');
 
@@ -18,7 +18,7 @@ export function Search({ initialValue, onSearch }: Props) {
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch(query.trim());
+    updateStorage(query.trim());
   };
 
   useEffect(() => {
