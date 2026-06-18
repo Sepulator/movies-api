@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { useTheme } from '@/hooks/useTheme';
 import { LanguageSwitcher } from './language-switcher';
@@ -12,11 +11,12 @@ export function Header() {
   const [isError, setIsError] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const t = useTranslations('Header');
+
   const handleError = () => {
     setIsError(true);
   };
 
-  const handleInvalidate = void useQueryClient().invalidateQueries();
+  // const handleInvalidate = void useQueryClient().invalidateQueries();
 
   if (isError) {
     throw new Error('Error boundary tested!');
@@ -32,7 +32,7 @@ export function Header() {
       <Link href="/about">{t('about')}</Link>
       <div>
         <LanguageSwitcher />
-        <input type="reset" value={t('invalidate')} onClick={handleInvalidate} />
+        {/*<input type="reset" value={t('invalidate')} onClick={handleInvalidate} />*/}
         <button type="button" secondary="true" onClick={handleError}>
           {t('error')}
         </button>
