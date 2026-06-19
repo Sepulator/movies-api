@@ -12,24 +12,36 @@ export function useLocalStorage(key = storageKey) {
   const isFirstRenderRef = useRef(true);
 
   const search = searchParams.get('search') ?? '';
-  const page = Number(searchParams.get('page') ?? 1);
+
+  const rawPage = searchParams.get('page');
+  const parsedPage = Number(rawPage);
+  const page = rawPage && !isNaN(parsedPage) && parsedPage > 0 ? parsedPage : 1;
 
   useEffect(() => {
     if (!isFirstRenderRef.current) return;
     isFirstRenderRef.current = false;
 
-    const savedSearch = localStorage.getItem(key);
-    if (savedSearch && !searchParams.has('search')) {
-      const params = new URLSearchParams(searchParams);
-      params.set('search', savedSearch);
-      params.set('page', '1');
+    try {
+      const savedSearch = localStorage.getItem(key);
+      if (savedSearch && !searchParams.has('search')) {
+        const params = new URLSearchParams(searchParams);
+        params.set('search', savedSearch);
+        params.set('page', '1');
 
-      router.replace(`${pathname}?${params.toString()}`);
+        router.replace(`${pathname}?${params.toString()}`);
+      }
+    } catch (error) {
+      console.warn('Failed to read from localStorage:', error);
     }
   }, [router, pathname, searchParams, key]);
 
   const updateStorage = (value: string) => {
-    localStorage.setItem(key, value);
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      console.warn('Failed to write to localStorage:', error);
+    }
+
     const params = new URLSearchParams(searchParams);
     params.set('search', value);
     params.set('page', '1');
