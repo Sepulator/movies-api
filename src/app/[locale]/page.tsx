@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { CardList } from '@/components/card-list';
-import { fetchMovies, fetchMovie } from '@/services/api';
+import { fetchMoviesAction, fetchMovieAction } from '@/app/actions/movies-actions';
 import { CardInfo } from '@/components/card-info';
 import { Search } from '@/components/search';
 import { Flyout } from '@/components/flyout';
@@ -16,8 +16,8 @@ export default async function Page({ searchParams }: Props) {
   const parsedPage = parseInt(pageParam, 10);
   const page = !isNaN(parsedPage) && parsedPage > 0 ? parsedPage : 1;
 
-  const dataPromise = fetchMovies(search, page);
-  const movie = detailsId ? await fetchMovie(detailsId) : null;
+  const dataPromise = fetchMoviesAction(search, page);
+  const moviePromise = detailsId ? fetchMovieAction(detailsId) : null;
 
   const spinner = <section role="alert" aria-busy="spinner" aria-details="spinner" style={{ textAlign: 'center' }} />;
 
@@ -29,7 +29,11 @@ export default async function Page({ searchParams }: Props) {
         <Suspense fallback={spinner}>
           <CardList dataPromise={dataPromise} page={page} />
         </Suspense>
-        {movie && <CardInfo data={movie} />}
+        {moviePromise && (
+          <Suspense fallback={spinner}>
+            <CardInfo dataPromise={moviePromise} />
+          </Suspense>
+        )}
       </section>
       <Flyout />
     </>
