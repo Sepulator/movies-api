@@ -5,6 +5,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintReact from '@eslint-react/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -15,6 +16,7 @@ export default defineConfig([
       tseslint.configs.recommendedTypeChecked,
       eslintReact.configs['recommended-typescript'],
       pluginQuery.configs['flat/recommended'],
+      nextPlugin.configs['recommended'],
       eslintConfigPrettier,
     ],
     languageOptions: {
@@ -40,6 +42,6 @@ export default defineConfig([
         },
       ],
     },
-    ignores: ['routeTree.gen.ts'],
+    ignores: ['next.config.ts', 'next-env.d.ts'],
   },
 ]);

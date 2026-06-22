@@ -1,7 +1,9 @@
+'use server';
+
 import { emptyMovie, emptyResult, errorMessage, getMovie, getUrl } from '@/consts';
 import type { MovieInfo, Result } from '@/models/interfaces';
 
-export async function fetchData<T>(url: string, empty: T) {
+async function fetchData<T>(url: string, empty: T) {
   try {
     const response = await fetch(url);
 
@@ -24,5 +26,6 @@ export async function fetchData<T>(url: string, empty: T) {
   }
 }
 
-export const fetchMovies = (query: string, page: number) => fetchData<Result>(getUrl(query, page), emptyResult);
-export const fetchMovie = (id: string) => fetchData<MovieInfo>(getMovie(id), emptyMovie);
+export const fetchMoviesAction = async (query: string, page: number) =>
+  fetchData<Result>(getUrl(query, page), emptyResult);
+export const fetchMovieAction = async (id: string) => fetchData<MovieInfo>(getMovie(id), emptyMovie);

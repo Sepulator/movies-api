@@ -1,41 +1,52 @@
-import { useMatch } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
+'use client';
+
+import { use } from 'react';
+import { useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
 
 import { Card } from './card';
 import cs from './card-list.module.css';
 import type { Result } from '@/models/interfaces';
 import { Pagination } from '@/components/pagination';
+import { fetchMoviesAction } from '@/app/actions/movies-actions';
 
 interface Props {
-  queryOptions: {
-    queryKey: readonly ['movies', string, number];
-    queryFn: () => Promise<Result>;
-  };
+  dataPromise: Promise<Result>;
   page: number;
 }
 
-export function CardList({ queryOptions, page }: Props) {
-  const { data, error } = useSuspenseQuery(queryOptions);
+export function CardList({ dataPromise, page }: Props) {
+  const initialData = use(dataPromise);
 
-  const isDetailsOpen = useMatch({
-    from: '/_layout/details/$movieId',
-    shouldThrow: false,
-  });
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search') || '';
+  const isDetailsOpen = searchParams.has('detailsId');
 
-  if (error || !data || data.Response === 'False') {
-    return <h2 style={{ textAlign: 'center' }}>{error?.message || data?.Error || 'Failed to fetch'}</h2>;
+  const { data } = useSWR<Result>(
+    ['movies', search, page],
+    ([_, q, p]) => fetchMoviesAction(q as string, p as number),
+    {
+      fallbackData: initialData,
+      revalidateOnFocus: false,
+    }
+  );
+
+  const currentData = data || initialData;
+
+  if (!currentData || currentData.Response === 'False') {
+    return <h2 style={{ textAlign: 'center' }}>{currentData?.Error || 'Failed to fetch'}</h2>;
   }
 
   return (
     <>
       <div className="card-list">
         <ul className={`${cs.gallery} ${isDetailsOpen && cs.details}`}>
-          {data.Search.map((movie) => (
+          {currentData.Search.map((movie) => (
             <Card key={movie.imdbID} movie={movie} />
           ))}
         </ul>
       </div>
-      <Pagination totalResults={data.totalResults} page={page} />
+      <Pagination totalResults={currentData.totalResults} page={page} />
     </>
   );
 }

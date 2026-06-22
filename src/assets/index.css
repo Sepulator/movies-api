@@ -78,6 +78,13 @@ a > h1 {
   grid-area: card-list;
 }
 
+.card-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .card-info {
   max-width: 300px;
   grid-area: card-info;
@@ -97,6 +104,10 @@ a > h1 {
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+  a {
+    flex-grow: 1;
+  }
 
   footer {
     margin: 0;

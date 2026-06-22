@@ -1,43 +1,40 @@
-import { useEffect, useRef, useState, type ChangeEvent, type SubmitEvent } from 'react';
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { useEffect, useRef, type ChangeEvent } from 'react';
+
 import cs from './search.module.css';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-interface Props {
-  placeholder?: string;
-  initialValue?: string;
-  onSearch: (value: string) => void;
-}
-
-export function Search({ placeholder, initialValue, onSearch }: Props) {
-  const [query, setQuery] = useState(initialValue || '');
+export function Search() {
+  const { search, updateStorage } = useLocalStorage();
   const ref = useRef<HTMLInputElement>(null);
+  const t = useTranslations('Search');
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
-
-  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch(query.trim());
+    if (ref.current) {
+      updateStorage(ref.current.value.trim());
+    }
   };
 
   useEffect(() => {
     ref.current?.focus();
-  }, []);
+  }, [search]);
 
   return (
     <form onSubmit={handleSubmit} className={cs.form}>
       <input
         ref={ref}
+        key={search}
         type="search"
         name="search"
-        aria-label={placeholder}
-        value={query}
-        placeholder={placeholder || ''}
+        defaultValue={search}
+        placeholder={t('placeholder') || ''}
         className={cs.input}
-        onChange={handleChange}
       />
       <button type="submit" className={cs.button}>
-        Search
+        {t('search')}
       </button>
     </form>
   );

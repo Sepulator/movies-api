@@ -1,12 +1,18 @@
+'use client';
+
 import { useMovies, useResetMovies } from '@/store/selectors';
-import { getDownloadURL } from '@/utils/generate-link-csv';
+import { generateCsvAction } from '@/app/actions/csv-actions';
+import { useTranslations } from 'next-intl';
 
 export function Flyout() {
   const movies = useMovies();
   const resetMovies = useResetMovies();
+  const t = useTranslations('Flyout');
 
-  const handleDownload = () => {
-    const url = getDownloadURL(movies);
+  const handleDownload = async () => {
+    const csvContent = await generateCsvAction(movies);
+    const blob = new Blob([csvContent], { type: 'text/csv; charset=utf-8' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
 
     link.href = url;
@@ -21,13 +27,13 @@ export function Flyout() {
   return (
     <div className="flyout-track">
       <aside role="navigation" id="flyout">
-        <p>Selected movies: {movies.length}</p>
+        <p>{t('selected', { count: movies.length })}</p>
         <div>
           <button type="button" onClick={resetMovies}>
-            Unselect
+            {t('unselect')}
           </button>
-          <button type="button" onClick={handleDownload}>
-            Download
+          <button type="button" onClick={() => void handleDownload()}>
+            {t('download')}
           </button>
         </div>
       </aside>
